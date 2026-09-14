@@ -5,44 +5,26 @@
 % ============================================================
 \documentclass[11pt, twoside, a4paper]{article}
 \usepackage{smj}
-
 \begin{document}
-
-% Cover choice: `classic` uses the original masthead layout; `universe`
-% uses the connected mathematical-universe cover imported from the CMJ work.
-% Change this one value to switch covers.
-\def\smjcoverchoice{universe}
-
-\smjvolume{
-    Inaugural Edition%
-    \quad\textbullet\quad%
-    Volume I%
-    \quad\textbullet\quad%
-    Fall 2026%
-}
-
+%
+%
+\smjvolume{I}
+\smjyear{2026}
+%
+%
 % ── Front Matter ────────────────────────────────────────────
 \pagenumbering{roman}
-\ifx\smjcoverchoice\undefined
-  \input{front/f1-cover}
-\else
-  \def\smjclassiccover{classic}
-  \ifx\smjcoverchoice\smjclassiccover
-    \input{front/f1-cover}
-  \else
-    \input{front/f1-cover-universe}
-  \fi
-\fi
+\input{front/f1-cover}
 \input{front/f2-info}
-%   Table of Contents ──────────────────────────────────────
+% ── Table of Contents ──────────────────────────────────────
 \input{front/f3-toc}
 \clearpage
-
 % ── Editorial ────────────────────────────────────────────────
-\pagenumbering{arabic}
+\setcounter{page}{1}
 \input{editorial/e1-thisvolume}
 \input{editorial/e2-editorial}
 % ── Articles ────────────────────────────────────────────────
+\pagenumbering{arabic}
 \input{articles/a1-shor}
 \input{articles/a2-shannon}
 \input{articles/a3-putt-putt}

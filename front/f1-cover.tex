@@ -2,77 +2,75 @@
 %  front/f1-cover.tex — Full-page cover with TikZ artwork
 % ============================================================
 \thispagestyle{empty}
-\begin{tikzpicture}[remember picture, overlay]
-
-%% ── BACKGROUND ─────────────────────────────────────────────
+\begin{tikzpicture}[remember picture, overlay, line cap=round, line join=round]
 \fill[white] (current page.south west) rectangle (current page.north east);
 
-%% ── TOP MASTHEAD BAND (6 cm) ────────────────────────────────
-\fill[smjcrimson]
-  (current page.north west)
-  rectangle ([yshift=-6cm]current page.north east);
+% ── Spine ribbon, flush to page edge ────────────────────────
+\fill[smjcrimson] (current page.north west) rectangle ([xshift=2.10cm]current page.south west);
+\fill[smjgold] ([xshift=2.10cm]current page.north west) rectangle ([xshift=2.28cm]current page.south west);
 
-% Gold accent rule at bottom of band
-\fill[smjgold]
-  ([yshift=-5.8cm]current page.north west)
-  rectangle ([yshift=-6.0cm]current page.north east);
+% ── Masthead (all crimson, four stacked lines) ──────────────
+\node[anchor=north west, text=smjcrimson, font=\fontsize{28}{31}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=3.00cm,yshift=-0.85cm]current page.north west) {THE};
+\node[anchor=north west, text=smjcrimson, font=\fontsize{28}{31}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=3.00cm,yshift=-1.95cm]current page.north west) {STUDENT};
+\node[anchor=north west, text=smjcrimson, font=\fontsize{28}{31}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=3.00cm,yshift=-3.05cm]current page.north west) {MATHEMATICAL};
+\node[anchor=north west, text=smjcrimson, font=\fontsize{28}{31}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=3.00cm,yshift=-4.15cm]current page.north west) {JOURNAL};
+\draw[smjgold, line width=1.15pt]
+  ([xshift=3.00cm,yshift=-5.55cm]current page.north west) -- ([xshift=12cm,yshift=-5.55cm]current page.north west);
+\node[anchor=north west, text=smjgold, font=\fontsize{19}{22}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=3.00cm,yshift=-6.1cm]current page.north west) {CONSTRUCTOR UNIVERSITY};
 
-% Journal title (stacked)
-\node[white, font=\fontsize{26}{30}\selectfont\bfseries, anchor=center]
-  at ([yshift=-2.0cm]current page.north)
-  {THE STUDENT};
-\node[smjgold, font=\fontsize{26}{30}\selectfont\bfseries, anchor=center]
-  at ([yshift=-3.4cm]current page.north)
-  {MATHEMATICAL JOURNAL};
+% ── Ribbon contents ─────────────────────────────────────────
+% SMJ@CU monogram near the top
+\node[text=smjgold, font=\fontsize{23}{24}\selectfont\bfseries, align=center, inner sep=0pt, anchor=north]
+  at ([xshift=1.05cm,yshift=-0.85cm]current page.north west)
+  {\shortstack{S\\M\\J\\\char64\\C\\U}};
 
-% Volume / date line
-\node[white, font=\fontsize{14}{18}\selectfont\bfseries, anchor=center]
-  at ([yshift=-4.8cm]current page.north)
-  {\smjvolume};
+% Small ribbon
+\draw[smjgold, line width=1.15pt]
+  ([xshift=0.30cm,yshift=-5.55cm]current page.north west) --
+  ([xshift=1.80cm,yshift=-5.55cm]current page.north west);
+
+% Volume numeral
+\node[text=smjgold, font=\fontsize{42}{42}\selectfont\bfseries,
+      align=center, inner sep=0pt, anchor=north]
+  at ([xshift=1.1cm,yshift=-9.79cm]current page.north west) {\smjvolume};
+
+% Second gold divider on the ribbon
+\draw[smjgold, line width=1.15pt]
+  ([xshift=0.39cm,yshift=-15.90cm]current page.north west) --
+  ([xshift=1.89cm,yshift=-15.90cm]current page.north west);
+
+% Date — mid-zone, bottom slot
+\node[text=smjgold, font=\fontsize{42}{42}\selectfont\bfseries,
+      align=center, inner sep=0pt, anchor=north]
+  at ([xshift=1.1cm,yshift=-18.5cm]current page.north west)
+  {\smjyear};
 
 %% ── ARTWORK: ONE FIXED CANVAS ───────────────────────────────
-%  Canvas origin (0,0) at current page.north + (0, -11cm).
-%  Canvas extends 21cm wide × 10cm tall, i.e.
-%      x ∈ [-10.5, 10.5],  y ∈ [-5, 5]   (in cm)
-%  Everything inside front/input/artwork.tex draws in that frame.
-\begin{scope}[shift={([yshift=-11cm]current page.north)}, x=1cm, y=1cm]
+\begin{scope}[shift={([xshift=1.14cm,yshift=-11.3cm]current page.north)}, x=1cm, y=1cm]
   \input{front/input/artwork.tex}
 \end{scope}
 
-%% ── IN THIS ISSUE (below artwork) ───────────────────────────
+% ── IN THIS ISSUE ───────────────────────────────────────────
 \node[anchor=north, inner sep=0pt]
-  at ([yshift=-16cm]current page.north) {%
-    \begin{minipage}{18cm}\centering
+  at ([xshift=1.14cm,yshift=-16.5cm]current page.north) {%
+    \begin{minipage}{17.5cm}\centering
       {\huge\bfseries\color{smjcrimson}IN THIS ISSUE}\\[0.2cm]
       \textcolor{smjgold}{\rule{8cm}{2pt}}\\[0.5cm]
       \smjcoverentries{article}
     \end{minipage}
   };
 
-%% ── BOTTOM BAND (3.7 cm) ────────────────────────────────────
-\fill[smjcrimson]
-  (current page.south west)
-  rectangle ([yshift=3.7cm]current page.south east);
-
-\fill[smjgold]
-  ([yshift=3.7cm]current page.south west)
-  rectangle ([yshift=3.9cm]current page.south east);
-
-\node[white, anchor=center]
-  at ([yshift=2.75cm]current page.south)
-  {A Student Publication of};
-
-\node[smjgold!85!white, font=\itshape, anchor=center]
-  at ([yshift=2.15cm]current page.south)
-  {The Constructor University Mathematical Society};
-
-\node[white, anchor=center]
-  at ([yshift=1.55cm]current page.south)
-  {\texttt{math.constructor.university}};
-
-\node[white, anchor=center]
-  at ([yshift=1.05cm]current page.south)
-  {\texttt{constructor-math.github.io}};
-
+% ── Footer ──────────────────────────────────────────────────
+\fill[smjcrimson] (current page.south west) rectangle ([yshift=3.7cm]current page.south east);
+\fill[smjgold] ([yshift=3.7cm]current page.south west) rectangle ([yshift=3.9cm]current page.south east);
+\node[white, anchor=center] at ([yshift=2.75cm]current page.south) {A Student Publication of};
+\node[smjgold!85!white, font=\itshape, anchor=center] at ([yshift=2.15cm]current page.south) {The Constructor University Mathematical Society};
+\node[white, anchor=center] at ([yshift=1.55cm]current page.south) {\texttt{math.constructor.university}};
+\node[white, anchor=center] at ([yshift=1.05cm]current page.south) {\texttt{constructor-math.github.io}};
 \end{tikzpicture}
 \clearpage
