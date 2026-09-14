@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{arora2009}
+Sanjeev Arora and Boaz Barak.
+\newblock {\em Computational Complexity: A Modern Approach}.
+\newblock Cambridge University Press, 2009.
+
+\bibitem{nielsen2010}
+Michael~A. Nielsen and Isaac~L. Chuang.
+\newblock {\em Quantum Computation and Quantum Information}.
+\newblock Cambridge University Press, 2010.
+
+\bibitem{rsa1978}
+R.~L. Rivest, A.~Shamir, and L.~Adleman.
+\newblock A method for obtaining digital signatures and public-key
+  cryptosystems.
+\newblock {\em Communications of the ACM}, 21(2):120--126, 1978.
+
+\bibitem{shor1994}
+Peter~W. Shor.
+\newblock Algorithms for quantum computation: Discrete logarithms and
+  factoring.
+\newblock In {\em Proceedings 35th Annual Symposium on Foundations of Computer
+  Science}. IEEE, 1994.
+
+\bibitem{watkins}
+K.~L. Watkins.
+\newblock An exposition on {Peter Shor's} polynomial-time factoring algorithm
+  and its effects on post-quantum cryptography.
+\newblock Texas A\&M University.
+
+\end{thebibliography}

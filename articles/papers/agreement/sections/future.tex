@@ -1,0 +1,16 @@
+\section{Future Work and Open Directions}%\label{sec:future}
+
+This paper studied single-decree Paxos, which agrees on one value. Practical systems need to agree on a sequence of values (a log of commands). \textbf{Multi-Paxos} extends the protocol by using a stable leader who can skip Phase~1 for subsequent rounds, reducing message complexity. \textbf{Raft}~\cite{ongaro2014} was designed as a more understandable alternative, making leader election and log replication explicit; it has become a widely used implementation choice in new systems.
+
+Several fundamental questions remain active research areas:
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Byzantine fault tolerance.} The FLP model assumes crash failures (a node goes silent). Byzantine failures allow nodes to send arbitrary or malicious messages. Castro and Liskov's PBFT~\cite{castroliskov1999} and, more recently, blockchain consensus protocols such as Tendermint and HotStuff~\cite{yin2019} address this harder setting.
+    \item \textbf{Optimal resilience.} Let $f$ denote the number of processes an algorithm must tolerate as faulty (crashed, in the crash-failure model, or Byzantine, in the Byzantine-failure model). Once liveness is restored by appropriate timing assumptions, crash-tolerant consensus in the standard partially synchronous model requires $n \geq 2f+1$, while Byzantine consensus in the standard unauthenticated synchronous or partially synchronous model requires $n \geq 3f+1$. These classical resilience bounds are tight for those models; active work includes reducing message and time complexity and extending tight bounds to weaker or hybrid failure models (e.g.\ mixtures of crash and Byzantine faults, or networks with only partial connectivity).
+    \item \textbf{Randomised consensus in practice.} Ben-Or's algorithm~\cite{benor1983} achieves consensus probabilistically in a fully asynchronous model, bypassing FLP. Modern protocols such as HotStuff~\cite{yin2019} instead use a partially synchronous Byzantine-fault model and provide linear communication complexity; the broader frontier is to combine strong liveness and efficiency with weaker timing and failure assumptions.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 7  --  CONCLUSION
+% ══════════════════════════════════════════════════════════

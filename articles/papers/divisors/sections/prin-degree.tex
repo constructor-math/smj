@@ -1,0 +1,132 @@
+\section{Principal divisors and degree}\label{sec:main}
+% ===============================================================
+
+We now prove Theorem~\ref{thmA} in two halves.
+
+\subsection{Every principal divisor has degree zero}
+
+\begin{smjproposition}\label{prop:degprin}
+For every $f \in \CC(z)^\times$ we have $\deg(\divv(f)) = 0$. Equivalently,
+$\Prin(\PP) \subseteq \ker(\deg)$.
+\end{smjproposition}
+
+\begin{proof}
+By Proposition~\ref{prop:reduced} write $f$ in reduced form,
+\[
+f(z) = c\, \frac{\prod_{i=1}^{r}(z-a_i)^{m_i}}{\prod_{j=1}^{s}(z-b_j)^{n_j}},
+\qquad c \in \CC^\times,
+\]
+with all $r+s$ points pairwise distinct. By the last assertion of
+Proposition~\ref{prop:reduced}, the zeros of $f$ in $\CC$ are exactly the $a_i$
+with $\ord_{a_i}(f) = m_i$, the poles in $\CC$ are exactly the $b_j$ with
+$\ord_{b_j}(f) = -n_j$, and $\ord_p(f) = 0$ at all other finite $p$. Set
+$M := \sum_i m_i$ and $N := \sum_j n_j$.
+
+It remains to compute $\ord_\infty(f)$. Substituting $z = 1/w$,
+\[
+f(1/w)
+= c\,\frac{\prod_i (w^{-1}-a_i)^{m_i}}{\prod_j (w^{-1}-b_j)^{n_j}}
+= c\,\frac{\prod_i w^{-m_i}(1-a_iw)^{m_i}}{\prod_j w^{-n_j}(1-b_jw)^{n_j}}
+= w^{\,N-M}\, g(w),
+\]
+where
+\[
+g(w) := c\,\frac{\prod_i (1-a_iw)^{m_i}}{\prod_j (1-b_jw)^{n_j}} .
+\]
+Each factor $1 - a_i w$ and $1 - b_j w$ takes the value $1$ at $w = 0$, so $g$ is
+holomorphic near $w = 0$ with $g(0) = c \neq 0$. Thus $f(1/w) = w^{N-M}g(w)$ is a
+local factorisation at $w = 0$ in the sense of Proposition~\ref{prop:ord}, and
+therefore
+\[
+\ord_\infty(f) = N - M = \sum_{j=1}^{s} n_j - \sum_{i=1}^{r} m_i .
+\]
+Adding up all the local contributions,
+\[
+\deg(\divv(f)) = \sum_{i=1}^{r} m_i - \sum_{j=1}^{s} n_j + \ord_\infty(f)
+= M - N + (N - M) = 0 . \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+This is the precise sense in which a meromorphic function on $\PP$ has ``as many
+zeros as poles''. Specialising to a polynomial $P$ recovers the Fundamental
+Theorem of Algebra in the form of Example~\ref{ex:poly}: the $\deg P$ roots in
+$\CC$ are balanced by a pole of order $\deg P$ at infinity.
+\end{remark}
+
+\subsection{Every divisor of degree zero is principal}
+
+\begin{smjproposition}\label{prop:degzero}
+Let $D \in \Div(\PP)$ with $\deg(D) = 0$. Then $D$ is principal.
+\end{smjproposition}
+
+\begin{proof}
+Write $D = \sum_{k=1}^{r} n_k (a_k) + n_\infty(\infty)$ with
+$a_1, \dots, a_r \in \CC$ distinct and $n_k, n_\infty \in \ZZ$; every divisor has
+this shape, the point $\infty$ being separated off from the finite ones. Since
+$\deg(D) = \sum_k n_k + n_\infty = 0$ we have $n_\infty = -\sum_k n_k$, and so
+\[
+D \;=\; \sum_{k=1}^{r} n_k (a_k) - \Big(\sum_{k=1}^{r} n_k\Big)(\infty)
+\;=\; \sum_{k=1}^{r} n_k\big[(a_k)-(\infty)\big].
+\]
+By Proposition~\ref{prop:divlinear} each bracket is $\divv(z-a_k)$, and $\divv$
+is a homomorphism (Proposition~\ref{prop:divhom}), so
+\[
+D \;=\; \sum_{k=1}^{r} n_k\, \divv(z-a_k)
+\;=\; \divv\Big(\prod_{k=1}^{r}(z-a_k)^{n_k}\Big),
+\]
+where negative exponents are read as factors in the denominator. Hence $D$ is
+principal.
+\end{proof}
+
+\begin{remark}
+The proof is constructive: given a degree-zero divisor it writes down a function
+realising it. Note also that the argument handles the coefficient at $\infty$
+automatically, by using $\deg(D) = 0$ to eliminate $n_\infty$ before building the
+function; this is necessary, since the very first nontrivial principal divisor
+$\divv(z) = (0)-(\infty)$ has $\infty$ in its support.
+\end{remark}
+
+\subsection{The main theorem}
+
+\begin{theorem}\label{thm:main}
+On $\PP$ one has $\Prin(\PP) = \ker(\deg)$. That is, a divisor is principal if
+and only if its degree is zero.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{prop:degprin} gives $\Prin(\PP) \subseteq \ker(\deg)$, and
+Proposition~\ref{prop:degzero} gives $\ker(\deg) \subseteq \Prin(\PP)$.
+\end{proof}
+
+\begin{smjcorollary}\label{cor:generators}
+$\ker(\deg)$ is generated as a group by the differences $(p) - (q)$ with
+$p, q \in \PP$, and each such difference is principal.
+\end{smjcorollary}
+
+\begin{proof}
+The proof of Proposition~\ref{prop:degzero} exhibits an arbitrary degree-zero
+divisor as an integer combination of the differences $(a_k) - (\infty)$, so these
+already generate. Each $(p)-(q)$ has degree $0$ and is therefore principal by
+Theorem~\ref{thm:main}; explicitly $(a)-(b) = \divv\big((z-a)/(z-b)\big)$ for
+finite $a, b$, and $(a) - (\infty) = \divv(z-a)$.
+\end{proof}
+
+\begin{remark}[Why $\PP$ is special]\label{rem:genus}
+Theorem~\ref{thm:main} says that on the Riemann sphere the degree is the
+\emph{only} obstruction to a divisor being principal. This is a genuinely special
+feature of $\PP$ and not a general phenomenon. On a compact Riemann surface $X$
+of genus $g$, the degree-zero part of the class group is
+\[
+\Cl^0(X) \;\cong\; \operatorname{Jac}(X),
+\]
+a complex torus of dimension $g$ called the Jacobian of $X$. Thus a degree-zero
+divisor is principal precisely when its class in this torus vanishes, which for
+$g \geq 1$ is a nontrivial condition on a positive-dimensional family of classes.
+The sphere is the case $g = 0$, where the torus is a single point and the
+condition is vacuous --- which is exactly Theorem~\ref{thm:main}. Everything
+below should be read as the genus-zero shadow of a much larger theory; see
+Section~\ref{sec:future}.
+\end{remark}
+
+% ===============================================================

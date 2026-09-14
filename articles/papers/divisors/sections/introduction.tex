@@ -1,0 +1,97 @@
+\section{Introduction}
+% ===============================================================
+
+\subsection{From counting roots to counting zeros and poles}
+
+The Fundamental Theorem of Algebra says that a nonzero polynomial $P \in \CC[z]$
+of degree $d$ has exactly $d$ roots, counted with multiplicity. This is a
+counting statement: the local data (a root, together with an integer recording
+how many times it is a root) adds up to a global invariant (the degree).
+
+Polynomials, however, are a very restricted class of functions. As soon as we
+allow quotients --- rational functions such as $(z-1)^2/z$ --- two things change.
+First, the function may blow up: at $z = 0$ our example has a \emph{pole}, which
+we should think of as a zero of negative multiplicity. Second, and less
+obviously, the count above stops balancing unless we look at $\infty$ as well.
+Our example has a double zero at $z=1$ and a simple pole at $z=0$, and the two
+multiplicities $2$ and $-1$ do not cancel. The missing contribution sits at
+infinity: as $|z| \to \infty$ the function grows like $z$, and once we make sense
+of ``the order of $f$ at $\infty$'' it will turn out to be $-1$. The three
+numbers $2$, $-1$, $-1$ now sum to zero.
+
+This is the phenomenon the paper is about. To state it we need a space on which
+$\infty$ is an honest point --- the complex projective line $\PP$, equivalently
+the Riemann sphere --- and a bookkeeping device that records all the local
+multiplicities at once. That device is the divisor.
+
+\subsection{The three objects, informally}
+
+Before the formal definitions, here is what the three main objects mean.
+
+\begin{itemize}[leftmargin=1.5em,itemsep=0.25em]
+\item A \emph{divisor} is a finite formal sum $D = \sum_p n_p\, p$ of points of
+$\PP$ with integer coefficients. It is nothing more than a way of writing down a
+finite list of points together with an integer attached to each. Divisors add
+coefficientwise, so they form an abelian group $\Div(\PP)$. The divisor
+$\divv(f)$ of a function records its zeros with positive coefficients and its
+poles with negative ones.
+\item A divisor is \emph{principal} if it is $\divv(f)$ for some nonzero rational
+function $f$ --- that is, if the prescribed configuration of zeros and poles is
+actually achieved by a function. These form a subgroup $\Prin(\PP)$.
+\item The \emph{degree} $\deg(D) = \sum_p n_p$ adds up all the coefficients. It
+is the total signed multiplicity, and it is a homomorphism $\Div(\PP) \to \ZZ$.
+\end{itemize}
+
+The question the paper answers is: \emph{which} divisors are principal? Since not
+every list of points and integers can plausibly come from a function, one expects
+some obstruction. The content of the main theorem is that on $\PP$ there is
+exactly one obstruction, and it is the degree.
+
+\subsection{Statement of results}
+
+\begin{namedtheorem}\label{thmA}
+On $\PP$ the principal divisors are exactly the divisors of degree zero:
+\[
+\Prin(\PP) \;=\; \ker\big(\deg : \Div(\PP) \to \ZZ\big).
+\]
+\end{namedtheorem}
+
+This is proved as Theorem~\ref{thm:main} in Section~\ref{sec:main}. Two
+consequences follow.
+
+\begin{namedtheorem}\label{thmB}
+The degree induces an isomorphism $\Cl(\PP) := \Div(\PP)/\Prin(\PP)
+\xrightarrow{\ \sim\ } \ZZ$.
+\end{namedtheorem}
+
+\begin{namedtheorem}\label{thmC}
+The assignment $D \mapsto \Ostr(D)$ induces an isomorphism $\Cl(\PP) \cong
+\Pic(\PP)$, and consequently $\Pic(\PP) \cong \ZZ$: every holomorphic line bundle
+on $\PP$ is isomorphic to $\Ostr(n)$ for a unique $n \in \ZZ$.
+\end{namedtheorem}
+
+Theorem~\ref{thmB} is Theorem~\ref{thm:cl} and Theorem~\ref{thmC} is
+Theorem~\ref{thm:pic}. We emphasise that Theorem~\ref{thmC} is proved here
+directly, by exhibiting line bundles through their transition functions on the
+two standard charts, rather than by quoting the general divisor--line-bundle
+correspondence; see Remark~\ref{rem:algebraic} for the relation to the algebraic
+formulation.
+
+\subsection{Prerequisites and outline}
+
+We assume the basic theory of holomorphic functions of one variable (power series,
+Laurent expansion, the maximum modulus principle, Cauchy estimates, and the
+existence of primitives with vanishing periods), as in Ahlfors \cite{Ahlfors},
+together with elementary group theory through the First Isomorphism Theorem. No
+prior acquaintance with Riemann surfaces or algebraic geometry is assumed.
+
+Section~\ref{sec:prelim} collects the local analytic facts: every zero or pole of
+a meromorphic function is measured by a unique integer. Section~\ref{sec:sphere}
+constructs $\PP$ and proves that its meromorphic functions are exactly the
+rational ones. Section~\ref{sec:divisors} assembles the local integers into
+divisors. Section~\ref{sec:exact} records the two exact sequences that organise
+the material. Section~\ref{sec:main} proves Theorem~\ref{thmA},
+Section~\ref{sec:cl} proves Theorem~\ref{thmB}, and Section~\ref{sec:pic} proves
+Theorem~\ref{thmC}.
+
+% ===============================================================

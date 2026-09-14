@@ -1,0 +1,255 @@
+\section{The Picard group}\label{sec:pic}
+% ===============================================================
+
+Divisors do not only govern functions; they also produce line bundles, and the
+group of line bundles is the geometric counterpart of the class group. In this
+section we compute it. We work throughout in the holomorphic (analytic) category:
+$\PP$ is a Riemann surface and all bundles, sections and transition functions are
+holomorphic. See Remark~\ref{rem:algebraic} for the algebraic counterpart.
+
+\subsection{Line bundles by transition functions}
+
+\begin{definition}
+A \emph{holomorphic line bundle} on a Riemann surface $X$ is a holomorphic vector
+bundle $L \to X$ of rank $1$. The set $\Pic(X)$ of isomorphism classes of
+holomorphic line bundles is a group under tensor product: the identity is the
+class of the trivial bundle $\Ostr = X \times \CC$, and the inverse of $[L]$ is
+the class of the dual bundle $L^{\vee}$, since $L \otimes L^{\vee} \cong \Ostr$.
+\end{definition}
+
+Concretely, a line bundle is described by trivialising it over an open cover and
+recording how the trivialisations differ. We use only the standard cover
+$\PP = U_0 \cup U_1$ of Section~\ref{sec:sphere}, on whose overlap
+$U_0 \cap U_1 = \CC^\times$ we have the coordinate $z$.
+
+\begin{definition}\label{def:cocycle}
+Let $\Ostr^\ast(V)$ denote the group, under multiplication, of nowhere-vanishing
+holomorphic functions on an open $V \subseteq \PP$. Given
+$g \in \Ostr^\ast(\CC^\times)$, let $L_g$ be the line bundle obtained by glueing
+$U_0 \times \CC$ to $U_1 \times \CC$ along the overlap via
+$(z, \xi_1) \mapsto (z, g(z)\xi_1)$. We call $g$ the \emph{transition function}
+of $L_g$ relative to this cover.
+\end{definition}
+
+\begin{smjlemma}\label{lem:cocycleiso}
+$L_g \cong L_{g'}$ if and only if there are $h_0 \in \Ostr^\ast(U_0)$ and
+$h_1 \in \Ostr^\ast(U_1)$ with $g' = h_0\, g\, h_1^{-1}$ on $\CC^\times$.
+Moreover $L_g \otimes L_{g'} \cong L_{gg'}$.
+\end{smjlemma}
+
+\begin{proof}
+An isomorphism $L_g \to L_{g'}$ is precisely a pair of nowhere-vanishing
+holomorphic functions $h_i$ on $U_i$ ($i = 0,1$) --- the two trivialised
+descriptions of the isomorphism --- compatible on the overlap, and compatibility
+reads $g' = h_0 g h_1^{-1}$. The tensor statement holds because tensoring
+multiplies transition functions.
+\end{proof}
+
+We shall use one imported fact, the only result in this paper not proved here.
+
+\begin{fact}[{\cite[\S30]{Forster}}]\label{fact:trivialise}
+Every holomorphic line bundle on $\PP$ admits trivialisations over $U_0$ and over
+$U_1$, and is therefore isomorphic to $L_g$ for some
+$g \in \Ostr^\ast(\CC^\times)$.
+\end{fact}
+
+This holds because each $U_i$ is biholomorphic to $\CC$, and every holomorphic
+line bundle on $\CC$ is trivial. We isolate it as an explicit hypothesis rather
+than absorbing it silently.
+
+\subsection{Winding numbers and the classification of transition functions}
+
+\begin{definition}
+For $g \in \Ostr^\ast(\CC^\times)$ the \emph{winding number} is
+\[
+\wind(g) := \frac{1}{2\pi i}\oint_{|z|=1} \frac{g'(z)}{g(z)}\,dz .
+\]
+\end{definition}
+
+It is an integer --- the winding number of the loop $g(e^{i\theta})$ about the
+origin --- and $\wind(gh) = \wind(g) + \wind(h)$, since $(gh)'/(gh) = g'/g +
+h'/h$. Note $\wind(z^n) = n$.
+
+\begin{smjlemma}\label{lem:windcoboundary}
+If $h_0 \in \Ostr^\ast(U_0)$ and $h_1 \in \Ostr^\ast(U_1)$ then
+$\wind(h_0) = \wind(h_1) = 0$.
+\end{smjlemma}
+
+\begin{proof}
+$h_0$ is holomorphic and nowhere zero on $U_0 = \CC$, so $h_0'/h_0$ is
+holomorphic on the disc $|z| \leq 1$ and its integral over the boundary vanishes
+by Cauchy's theorem. For $h_1$, pass to the coordinate $w = 1/z$: the function
+$w \mapsto h_1(1/w)$ is holomorphic and nowhere zero on $U_1 \cong \CC$, so by the
+same argument $\oint_{|w|=1}\frac{d}{dw}\log h_1 \,dw = 0$; substituting
+$w = 1/z$ changes the integral by a sign, so $\wind(h_1) = 0$ as well.
+\end{proof}
+
+\begin{smjlemma}[Factorisation of transition functions]\label{lem:cousin}
+Every $g \in \Ostr^\ast(\CC^\times)$ can be written as
+\[
+g(z) = z^{\,n}\, h_0(z)\, h_1(z)^{-1}, \qquad n = \wind(g),
+\]
+with $h_0 \in \Ostr^\ast(U_0)$ and $h_1 \in \Ostr^\ast(U_1)$.
+\end{smjlemma}
+
+\begin{proof}
+Put $n := \wind(g)$ and $G(z) := z^{-n}g(z)$, so that $\wind(G) = \wind(g) - n =
+0$. The function $G'/G$ is holomorphic on $\CC^\times$, and $\CC^\times$ has the
+homotopy type of a circle, so $G'/G$ admits a primitive on $\CC^\times$ precisely
+when its integral over $|z| = 1$ vanishes \cite[Ch.~4]{Ahlfors} --- which is
+exactly the statement $\wind(G) = 0$. Let $\varphi$ be such a primitive. Then
+$\big(Ge^{-\varphi}\big)' = e^{-\varphi}(G' - G\varphi') = 0$, so
+$G = \alpha e^{\varphi}$ for a constant $\alpha \in \CC^\times$; absorbing
+$\alpha$ into $\varphi$ (replace $\varphi$ by $\varphi + \log\alpha$ for any
+choice of logarithm) we may assume $G = e^{\varphi}$.
+
+Now expand $\varphi$ in a Laurent series on $\CC^\times$
+(Theorem~\ref{thm:laurent}), $\varphi(z) = \sum_{k \in \ZZ} a_k z^k$, and split
+it into its nonnegative and negative parts,
+\[
+\varphi_0(z) := \sum_{k \geq 0} a_k z^{k}, \qquad
+\varphi_1(z) := \sum_{k < 0} a_k z^{k} = \sum_{j > 0} a_{-j} w^{j} .
+\]
+The series $\varphi_0$ converges on all of $\CC$, hence is holomorphic on $U_0$;
+the series $\varphi_1$, viewed in the coordinate $w = 1/z$, is a power series in
+$w$ with no constant term, converging on all of $\CC$, hence holomorphic on
+$U_1$. On the overlap $\varphi = \varphi_0 + \varphi_1$. Setting
+$h_0 := e^{\varphi_0} \in \Ostr^\ast(U_0)$ and
+$h_1 := e^{-\varphi_1} \in \Ostr^\ast(U_1)$ gives
+$G = e^{\varphi_0}e^{\varphi_1} = h_0 h_1^{-1}$ and therefore
+$g = z^n h_0 h_1^{-1}$.
+\end{proof}
+
+\begin{theorem}\label{thm:picZ}
+The map $\ZZ \to \Pic(\PP)$, $n \mapsto [L_{z^n}]$, is a group isomorphism.
+\end{theorem}
+
+\begin{proof}
+It is a homomorphism by the tensor statement of Lemma~\ref{lem:cocycleiso}, since
+$z^{m}z^{n} = z^{m+n}$.
+
+\emph{Surjectivity.} By Fact~\ref{fact:trivialise} every line bundle is $L_g$ for
+some $g \in \Ostr^\ast(\CC^\times)$. By Lemma~\ref{lem:cousin},
+$g = z^{n}h_0h_1^{-1}$ with $n = \wind(g)$, so $L_g \cong L_{z^n}$ by
+Lemma~\ref{lem:cocycleiso}.
+
+\emph{Injectivity.} Suppose $L_{z^m} \cong L_{z^n}$. By
+Lemma~\ref{lem:cocycleiso} there are $h_i \in \Ostr^\ast(U_i)$ with
+$z^{m} = h_0 z^{n} h_1^{-1}$. Taking winding numbers and using
+Lemma~\ref{lem:windcoboundary},
+$m = \wind(h_0) + n - \wind(h_1) = n$.
+\end{proof}
+
+\subsection{The line bundle of a divisor}
+
+\begin{definition}\label{def:OD}
+Let $D \in \Div(\PP)$. For open $U \subseteq \PP$ set
+\[
+\Ostr(D)(U) := \{\, f \in \CC(z)^\times : \big(\divv(f) + D\big)\big|_U \geq 0 \,\}
+\cup \{0\},
+\]
+using the notation of Definition~\ref{def:effective}. Explicitly, $f$ belongs to
+$\Ostr(D)(U)$ if and only if $\ord_p(f) + n_p \geq 0$ for every $p \in U$, that
+is, if $f$ is allowed a pole of order at most $n_p$ at $p$ when $n_p > 0$ and is
+required to vanish to order at least $-n_p$ when $n_p < 0$. The zero function is
+adjoined separately because $\divv(0)$ is undefined.
+\end{definition}
+
+\begin{smjproposition}\label{prop:ODbundle}
+$\Ostr(D)$ is a line bundle: every $p \in \PP$ has a neighbourhood $V$ on which
+$\Ostr(D)$ is free of rank one over the holomorphic functions, with generator
+$t_p^{-n_p}$.
+\end{smjproposition}
+
+\begin{proof}
+Choose $V \ni p$ meeting $\supp(D)$ only in $p$, possible since $\supp(D)$ is
+finite. For $f$ meromorphic on $V$ the condition
+$(\divv(f)+D)|_V \geq 0$ reads $\ord_p(f) \geq -n_p$ together with
+$\ord_q(f) \geq 0$ for $q \in V\setminus\{p\}$; by
+Propositions~\ref{prop:ord} and \ref{prop:ordhom} this holds if and only if
+$t_p^{\,n_p}f$ is holomorphic on $V$. Hence
+$\Ostr(D)(V) = t_p^{-n_p}\cdot \Ostr(V)$, as claimed.
+\end{proof}
+
+\begin{smjproposition}\label{prop:ODinvariant}
+If $D \sim E$ then $\Ostr(D) \cong \Ostr(E)$. In particular, if $D$ is principal
+then $\Ostr(D) \cong \Ostr$.
+\end{smjproposition}
+
+\begin{proof}
+Let $D - E = \divv(f)$. For any open $U$ and any $g \in \Ostr(D)(U)$,
+\[
+\divv(gf) + E = \divv(g) + \divv(f) + E = \divv(g) + (D-E) + E = \divv(g) + D,
+\]
+which is $\geq 0$ on $U$ by hypothesis; hence multiplication by $f$ maps
+$\Ostr(D)(U)$ into $\Ostr(E)(U)$. Multiplication by $f^{-1}$ is an inverse map,
+so this is an isomorphism, compatible with restriction and with multiplication by
+holomorphic functions. Taking $E = 0$ gives the last statement, since
+$\Ostr(0) = \Ostr$.
+\end{proof}
+
+\begin{smjproposition}\label{prop:Oninfty}
+For $n \in \ZZ$ we have $\Ostr(n(\infty)) \cong L_{z^n}$.
+\end{smjproposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:ODbundle} with the cover $\{U_0, U_1\}$, which is
+legitimate because $\supp(n(\infty)) = \{\infty\}$ meets $U_0$ not at all and
+$U_1$ only in $\infty$. Over $U_0$ the condition is that $f$ be holomorphic, so
+$\Ostr(n(\infty))(U_0) = \Ostr(U_0)$ with generator $e_0 = 1$. Over $U_1$ the
+generator is $t_\infty^{-n} = z^{n}$, so $e_1 = z^n$.
+
+A section $f$ over the overlap has coordinates $\xi_0, \xi_1$ determined by
+$f = \xi_0 e_0 = \xi_1 e_1$, i.e.\ $\xi_0 = f$ and $\xi_1 = f z^{-n}$. Hence
+$\xi_0 = z^{n}\xi_1$, so the transition function relative to $\{U_0, U_1\}$ is
+$z^{n}$, and $\Ostr(n(\infty)) \cong L_{z^n}$ by Definition~\ref{def:cocycle}.
+\end{proof}
+
+\subsection{The Picard group of $\PP$}
+
+\begin{theorem}\label{thm:pic}
+The assignment $D \mapsto \Ostr(D)$ induces a group isomorphism
+\[
+\Cl(\PP) \xrightarrow{\ \sim\ } \Pic(\PP),
+\]
+and consequently $\Pic(\PP) \cong \ZZ$. Writing $\Ostr(n) := \Ostr(n(\infty))$,
+every holomorphic line bundle on $\PP$ is isomorphic to $\Ostr(n)$ for a unique
+$n \in \ZZ$, namely $n = \wind$ of its transition function.
+\end{theorem}
+
+\begin{proof}
+The assignment is well defined on classes by Proposition~\ref{prop:ODinvariant}
+and lands in $\Pic(\PP)$ by Proposition~\ref{prop:ODbundle}. Consider the
+diagram of maps
+\[
+\Cl(\PP) \xrightarrow{\ [D]\mapsto[\Ostr(D)]\ } \Pic(\PP)
+\xleftarrow{\ n \mapsto [L_{z^n}]\ } \ZZ .
+\]
+By Proposition~\ref{prop:normalform} every class satisfies $[D] =
+[(\deg D)(\infty)]$, so by Proposition~\ref{prop:Oninfty} the left-hand map sends
+$[D]$ to $[L_{z^{\deg D}}]$; that is, it equals the composite of
+$\overline{\deg} : \Cl(\PP) \to \ZZ$ with $n \mapsto [L_{z^n}]$. The first factor
+is an isomorphism by Theorem~\ref{thm:cl} and the second by
+Theorem~\ref{thm:picZ}, so the left-hand map is an isomorphism as well. In
+particular it is a homomorphism, and $\Pic(\PP) \cong \Cl(\PP) \cong \ZZ$. The
+final statement is Theorem~\ref{thm:picZ} combined with
+Proposition~\ref{prop:Oninfty}.
+\end{proof}
+
+Thus line bundles on $\PP$, like divisor classes, are classified by a single
+integer, and that integer is the degree.
+
+\begin{remark}[The algebraic counterpart]\label{rem:algebraic}
+We have worked analytically throughout: $\Pic(\PP)$ was the group of
+\emph{holomorphic} line bundles on a complex manifold. In algebraic geometry one
+defines $\Pic$ as the group of invertible sheaves on a scheme, and proves
+$\Cl(X) \cong \Pic(X)$ for a noetherian, integral, separated, locally factorial
+scheme \cite[Cor.~II.6.16]{Hartshorne}; for $X = \mathbb{P}^1_{\CC}$ this gives
+$\Pic(\mathbb{P}^1_\CC) \cong \ZZ$ as well \cite[Prop.~II.6.4]{Hartshorne},
+\cite[Tag 0BXJ]{Stacks}. That the algebraic and analytic answers agree is not a
+formality: it is an instance of Serre's GAGA theorems \cite{GAGA}, which compare
+coherent sheaves on a projective variety with their analytic counterparts. We
+have avoided relying on this comparison by computing the analytic group directly.
+\end{remark}
+
+% ===============================================================

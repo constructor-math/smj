@@ -1,0 +1,115 @@
+\section{The two exact sequences}\label{sec:exact}
+% ===============================================================
+
+Two questions organise what follows.
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15em]
+\item Which divisors come from meromorphic functions --- and how much of a
+function is remembered by its divisor? This is answered in this section, by the
+first exact sequence, and completed by Theorem~\ref{thmA}.
+\item How far is an arbitrary divisor from being principal? The second exact
+sequence sets up the quotient that measures this; the measurement itself is
+carried out in Section~\ref{sec:cl}.
+\end{itemize}
+
+\subsection{The kernel of the divisor map}
+
+\begin{smjlemma}\label{lem:constant}
+Every function holomorphic on all of $\PP$ is constant.
+\end{smjlemma}
+
+\begin{proof}
+Let $h$ be holomorphic on $\PP$. Then $|h|$ is continuous on the compact space
+$\PP$ (Proposition~\ref{prop:compact}), so it attains a maximum at some
+$p_0 \in \PP$. Choose a chart around $p_0$; in it $h$ is a holomorphic function
+of one variable whose modulus has an interior maximum, so by the maximum modulus
+principle \cite[Ch.~4]{Ahlfors} $h$ is constant, say equal to $c$, on a
+neighbourhood of $p_0$. The set $\{p \in \PP : h(p) = c\}$ is therefore nonempty
+and open; it is closed by continuity; and $\PP$ is connected
+(Proposition~\ref{prop:compact}). Hence it is all of $\PP$.
+\end{proof}
+
+\begin{smjproposition}\label{prop:kernel}
+$\ker(\divv) = \CC^\times$.
+\end{smjproposition}
+
+\begin{proof}
+If $c \in \CC^\times$ then $\divv(c) = 0$ by Proposition~\ref{prop:divconst}, so
+$\CC^\times \subseteq \ker(\divv)$. Conversely let $f \in \CC(z)^\times$ with
+$\divv(f) = 0$. Then $\ord_p(f) = 0$ for every $p \in \PP$, so $f$ has no poles
+and is holomorphic on all of $\PP$. By Lemma~\ref{lem:constant} $f$ is constant,
+and it is nonzero, so $f \in \CC^\times$.
+\end{proof}
+
+\begin{remark}
+Equivalently: two rational functions have the same divisor if and only if they
+differ by a nonzero constant multiple. Indeed $\divv(f) = \divv(g)$ gives
+$\divv(f/g) = 0$, so $f/g \in \CC^\times$. A divisor therefore remembers a
+function exactly up to scale --- no more and no less.
+\end{remark}
+
+\subsection{The first exact sequence}
+
+\begin{smjproposition}\label{prop:seq1}
+The sequence
+\[
+1 \longrightarrow \CC^\times \longrightarrow \CC(z)^\times
+\stackrel{\divv}{\longrightarrow} \Prin(\PP) \longrightarrow 1
+\]
+is exact.
+\end{smjproposition}
+
+\begin{proof}
+The first map is the inclusion of constants, which is injective. Exactness at
+$\CC(z)^\times$ is Proposition~\ref{prop:kernel}. Exactness at $\Prin(\PP)$ is
+the surjectivity of $\divv$ onto its image, which holds by
+Definition~\ref{def:prin}.
+\end{proof}
+
+\begin{remark}
+By the First Isomorphism Theorem this says
+$\Prin(\PP) \cong \CC(z)^\times / \CC^\times$: the group of principal divisors
+\emph{is} the group of nonzero rational functions modulo scaling.
+\end{remark}
+
+\subsection{Linear equivalence and the divisor class group}
+
+\begin{definition}\label{def:lineq}
+Divisors $D, E \in \Div(\PP)$ are \emph{linearly equivalent}, written
+$D \sim E$, if $D - E \in \Prin(\PP)$.
+\end{definition}
+
+\begin{smjproposition}
+Linear equivalence is an equivalence relation on $\Div(\PP)$.
+\end{smjproposition}
+
+\begin{proof}
+This is exactly the statement that $\Prin(\PP)$ is a subgroup of the abelian
+group $\Div(\PP)$ (Definition~\ref{def:prin}). Reflexivity: $D - D = 0 =
+\divv(1)$. Symmetry: if $D - E = \divv(f)$ then
+$E - D = -\divv(f) = \divv(f^{-1})$. Transitivity: if $D - E = \divv(f)$ and
+$E - F = \divv(g)$ then $D - F = \divv(f) + \divv(g) = \divv(fg)$, using
+Proposition~\ref{prop:divhom} throughout.
+\end{proof}
+
+\begin{definition}
+The \emph{divisor class group} of $\PP$ is the quotient
+\[
+\Cl(\PP) := \Div(\PP)/\Prin(\PP),
+\]
+whose elements are the linear equivalence classes $[D]$.
+\end{definition}
+
+\subsection{The second exact sequence}
+
+\begin{smjproposition}
+The sequence
+$0 \to \Prin(\PP) \to \Div(\PP) \to \Cl(\PP) \to 0$ is exact.
+\end{smjproposition}
+
+\begin{proof}
+The first map is the inclusion of a subgroup, hence injective. The second is the
+quotient map $q : D \mapsto [D]$, which is surjective by construction and has
+kernel $\Prin(\PP)$ by the definition of a quotient group.
+\end{proof}
+
+% ===============================================================

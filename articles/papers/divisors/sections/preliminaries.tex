@@ -1,0 +1,225 @@
+\section{Preliminaries from algebra and complex analysis}\label{sec:prelim}
+% ===============================================================
+
+The goal of this section is a single statement, Corollary~\ref{cor:localorder}:
+near any point, a nonzero meromorphic function looks like a power of a local
+coordinate times a nonvanishing function, and the exponent is a well-defined
+integer. That integer is what a divisor records.
+
+\subsection{The polynomial ring and the rational function field}
+
+The polynomial ring over $\CC$ is
+\[
+\CC[z] \;=\; \Big\{ \textstyle\sum_{j=0}^{n} a_j z^j \;:\; a_j \in \CC,\ n \geq 0 \Big\},
+\]
+an integral domain, and its field of fractions is the field of rational functions
+\[
+\CC(z) \;=\; \Big\{ \tfrac{P(z)}{Q(z)} \;:\; P, Q \in \CC[z],\ Q \neq 0 \Big\}.
+\]
+We write $\CC^\times = \CC \setminus \{0\}$ and $\CC(z)^\times$ for the group of
+nonzero rational functions under multiplication.
+
+\begin{smjproposition}[Reduced form]\label{prop:reduced}
+Every $f \in \CC(z)^\times$ may be written as
+\[
+f(z) \;=\; c\, \frac{\prod_{i=1}^{r} (z-a_i)^{m_i}}{\prod_{j=1}^{s} (z-b_j)^{n_j}},
+\qquad c \in \CC^\times,
+\]
+where $r, s \geq 0$ (empty products being $1$), the integers $m_i, n_j$ are
+positive, and the $r+s$ points $a_1, \dots, a_r, b_1, \dots, b_s \in \CC$ are
+\emph{pairwise distinct}. In such an expression the $a_i$ are precisely the zeros
+of $f$ in $\CC$, with multiplicities $m_i$, and the $b_j$ are precisely its poles
+in $\CC$, with orders $n_j$.
+\end{smjproposition}
+
+\begin{proof}
+Write $f = P/Q$ with $P, Q \in \CC[z]$, $Q \neq 0$. Since $\CC$ is algebraically
+closed, the Fundamental Theorem of Algebra factors both into linear factors,
+\[
+P(z) = c \prod_{i} (z - \alpha_i)^{k_i}, \qquad
+Q(z) = \prod_{j} (z - \beta_j)^{\ell_j},
+\]
+with the $\alpha_i$ pairwise distinct and the $\beta_j$ pairwise distinct.
+If some $\alpha_i$ equals some $\beta_j$, cancel the common factor
+$(z-\alpha_i)^{\min(k_i,\ell_j)}$; this is legitimate because $\CC[z]$ is an
+integral domain, and it strictly decreases $\deg P + \deg Q$, so after finitely
+many steps no $\alpha_i$ coincides with any $\beta_j$. Discarding the factors
+with exponent $0$ and renaming, we obtain the displayed form with all $r+s$
+points pairwise distinct.
+
+For the final assertion, fix a point $p \in \CC$. If $p \notin \{a_i\} \cup
+\{b_j\}$, then every factor is holomorphic and nonzero at $p$, so $f(p) \in
+\CC^\times$. If $p = a_i$, then $f(z) = (z-a_i)^{m_i} u(z)$ where $u$ collects
+the remaining factors and the constant; $u$ is holomorphic and nonzero at $a_i$
+precisely because no $b_j$ equals $a_i$. The case $p = b_j$ is identical with
+$(z-b_j)^{-n_j}$ in place of $(z-a_i)^{m_i}$.
+\end{proof}
+
+\begin{remark}
+The cancellation step is not a formality: without it, $f = (z-1)^2/(z-1)$
+satisfies the displayed formula with $a_1 = b_1 = 1$, and the reading of the
+exponents as zero and pole orders fails. The reduced form is used in an essential
+way in Proposition~\ref{prop:degzero}.
+\end{remark}
+
+\begin{definition}\label{def:mult}
+Let $P \in \CC[z]$ and $a \in \CC$. We say $a$ is a \emph{zero of multiplicity
+$m$} of $P$ if $P(z) = (z-a)^m Q(z)$ with $Q \in \CC[z]$ and $Q(a) \neq 0$.
+\end{definition}
+
+\begin{example}\label{ex:mult}
+Let $P(z) = (z-1)^2(z+2)$. At $a = 1$ we may write $P(z) = (z-1)^2 Q(z)$ with
+$Q(z) = z+2$ and $Q(1) = 3 \neq 0$, so $1$ is a zero of multiplicity $2$.
+At $a = -2$ we write $P(z) = (z+2) R(z)$ with $R(z) = (z-1)^2$ and $R(-2) = 9
+\neq 0$, so $-2$ is a zero of multiplicity $1$. At every other point $P$ does not
+vanish. The multiplicities sum to $3 = \deg P$, as
+Proposition~\ref{prop:degsum} records in general.
+\end{example}
+
+\begin{remark}
+Definition~\ref{def:mult} is stated for polynomials because that is all
+Proposition~\ref{prop:degsum} needs. It is the special case, for $f$ a
+polynomial and $m \geq 1$, of the general notion of local order established in
+Corollary~\ref{cor:localorder} below, which applies to any meromorphic function
+and allows $m$ to be negative.
+\end{remark}
+
+\begin{smjproposition}\label{prop:degsum}
+If $P(z) = c \prod_{j=1}^{r} (z-a_j)^{m_j}$ with $c \in \CC^\times$, then
+$\deg(P) = \sum_{j=1}^{r} m_j$.
+\end{smjproposition}
+
+\begin{proof}
+Since $\CC[z]$ is an integral domain, the degree of a product of nonzero
+polynomials is the sum of the degrees. Each factor $(z-a_j)^{m_j}$ has degree
+$m_j$ and the constant $c$ has degree $0$, whence the claim.
+\end{proof}
+
+\subsection{Laurent expansions, poles, and meromorphic functions}
+
+\begin{theorem}[Laurent expansion; {\cite[Ch.~5]{Ahlfors}}]\label{thm:laurent}
+Let $A = \{z \in \CC : 0 < |z-a| < R\}$ and let $f$ be holomorphic on $A$. Then
+there are unique coefficients $c_n \in \CC$ $(n \in \ZZ)$ with
+\[
+f(z) \;=\; \sum_{n=-\infty}^{\infty} c_n (z-a)^n \qquad (z \in A),
+\]
+the convergence being absolute and locally uniform on $A$. The coefficients are
+given by $c_n = \frac{1}{2\pi i}\oint_{|z-a|=\rho} \frac{f(z)}{(z-a)^{n+1}}\,dz$
+for any $0 < \rho < R$.
+\end{theorem}
+
+The negative-power part of the expansion classifies the singularity at $a$: it
+vanishes identically for a removable singularity, has finitely many nonzero terms
+for a pole, and infinitely many for an essential singularity.
+
+\begin{definition}\label{def:pole}
+Let $f$ be holomorphic on a punctured neighbourhood of $a \in \CC$. We say $a$ is
+a \emph{pole of order $m$} of $f$, where $m \geq 1$, if the Laurent expansion of
+$f$ at $a$ has the form
+\[
+f(z) = \sum_{n=-m}^{\infty} c_n (z-a)^n, \qquad c_{-m} \neq 0 .
+\]
+\end{definition}
+
+Only now can we say what a meromorphic function is.
+
+\begin{definition}\label{def:mero}
+Let $U \subseteq \CC$ be open. A function $f$ is \emph{meromorphic} on $U$ if
+there is a subset $S \subseteq U$, discrete and closed in $U$, such that $f$ is
+holomorphic on $U \setminus S$ and every point of $S$ is a pole of $f$ in the
+sense of Definition~\ref{def:pole}.
+\end{definition}
+
+\begin{remark}
+The requirement that each singularity be a \emph{pole} is what the word
+meromorphic contributes: essential singularities are excluded by definition.
+Thus $e^{1/z}$ is not meromorphic on any neighbourhood of $0$, whereas $1/z^2$
+is. Equivalently, $f$ is meromorphic on $U$ if and only if it extends to a
+holomorphic map $U \to \PP$ that is not identically $\infty$; we will use this
+formulation in Section~\ref{sec:sphere}.
+\end{remark}
+
+\begin{smjproposition}\label{prop:polefact}
+If $a$ is a pole of order $m$ of $f$, then there is a function $u$, holomorphic
+on a full neighbourhood of $a$, with
+\[
+f(z) = (z-a)^{-m} u(z), \qquad u(a) \neq 0 .
+\]
+\end{smjproposition}
+
+\begin{proof}
+By Definition~\ref{def:pole}, $f(z) = \sum_{n \geq -m} c_n (z-a)^n$ on a
+punctured disc $0 < |z-a| < R$, with $c_{-m} \neq 0$. Factoring out
+$(z-a)^{-m}$ gives $f(z) = (z-a)^{-m} \sum_{n \geq -m} c_n (z-a)^{n+m}$.
+Reindexing by $k = n+m \geq 0$, define
+\[
+u(z) := \sum_{k=0}^{\infty} c_{k-m}(z-a)^{k}.
+\]
+This is a power series in nonnegative powers of $z-a$. It converges wherever the
+original Laurent series does, hence on $0 < |z-a| < R$; but a power series
+converging on a punctured disc converges on the whole disc, since its radius of
+convergence is determined by its coefficients alone. Therefore $u$ is holomorphic
+on $|z-a| < R$, in particular \emph{at} $a$ --- which is the point of the
+reindexing, since $f$ itself was only defined on the punctured disc. Finally
+$u(a) = c_{-m} \neq 0$.
+\end{proof}
+
+\subsection{Local factorisation and the local order}
+
+\begin{smjproposition}\label{prop:zerofact}
+Let $f$ be holomorphic near $a \in \CC$ and not identically zero near $a$. Then
+either $f(a) \neq 0$, or there exist a unique integer $m \geq 1$ and a
+holomorphic function $u$ near $a$ with
+\[
+f(z) = (z-a)^m u(z), \qquad u(a) \neq 0 .
+\]
+\end{smjproposition}
+
+\begin{proof}
+Expand $f(z) = \sum_{n \geq 0} c_n (z-a)^n$ near $a$. If $c_0 = f(a) \neq 0$
+there is nothing to prove. Otherwise, since $f \not\equiv 0$, not all $c_n$
+vanish; let $m \geq 1$ be least with $c_m \neq 0$. Then
+$f(z) = (z-a)^m \sum_{k \geq 0} c_{k+m}(z-a)^{k}$, and as in
+Proposition~\ref{prop:polefact} the series $u(z) := \sum_{k \geq 0}
+c_{k+m}(z-a)^k$ is holomorphic near $a$ with $u(a) = c_m \neq 0$.
+
+Uniqueness is proved in Lemma~\ref{lem:unique} below, in the generality we shall
+need.
+\end{proof}
+
+\begin{smjlemma}[Uniqueness of the local exponent]\label{lem:unique}
+Let $a \in \CC$ and suppose
+\[
+(z-a)^{m} u(z) \;=\; (z-a)^{n} v(z)
+\]
+on a punctured neighbourhood of $a$, where $m, n \in \ZZ$ and $u, v$ are
+holomorphic and nonvanishing at $a$. Then $m = n$ and $u = v$.
+\end{smjlemma}
+
+\begin{proof}
+Suppose $m \neq n$; without loss of generality $m < n$. Dividing by
+$(z-a)^{m}$ --- legitimate for $z \neq a$ --- gives $u(z) = (z-a)^{n-m} v(z)$ on
+a punctured neighbourhood. Both sides are holomorphic at $a$ and agree off $a$,
+so by continuity they agree at $a$ as well; since $n - m \geq 1$ the right-hand
+side vanishes at $a$, giving $u(a) = 0$, contrary to hypothesis. Hence $m = n$,
+and then $u = v$ off $a$ and so, again by continuity, everywhere near $a$.
+\end{proof}
+
+\begin{smjcorollary}[Local order]\label{cor:localorder}
+Let $f$ be meromorphic and not identically zero near $a \in \CC$. Then there are
+a unique $m \in \ZZ$ and a function $u$, holomorphic and nonvanishing at $a$,
+with $f(z) = (z-a)^m u(z)$ near $a$. We call $m$ the \emph{order} of $f$ at $a$.
+\end{smjcorollary}
+
+\begin{proof}
+Existence: if $f$ has a pole at $a$ apply Proposition~\ref{prop:polefact} (with
+$m < 0$); otherwise $f$ is holomorphic at $a$ and we apply
+Proposition~\ref{prop:zerofact}, taking $m = 0$ and $u = f$ when $f(a) \neq 0$.
+Uniqueness is Lemma~\ref{lem:unique}.
+\end{proof}
+
+Thus zeros and poles alike are measured by a single integer, positive for zeros,
+negative for poles, zero when the function is finite and nonvanishing. This is
+the fact that makes the divisor construction possible.
+
+% ===============================================================

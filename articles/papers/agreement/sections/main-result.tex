@@ -1,0 +1,16 @@
+\section{The Main Result: FLP Impossibility}\label{sec:main-result}
+
+We work in the \emph{asynchronous message-passing} model (see \Cref{subsec:synchrony}): processes communicate by sending reliable messages, there is no bound on message delivery time or relative process speed, and processes may fail by crashing (stopping permanently and silently). We assume $n\ge 2$ processes and that at most one process may crash. Unlike the ring, tree, and arbitrary-graph topologies discussed in \Cref{subsec:network-graph}, the result below assumes a \emph{complete} communication topology: every pair of processes can exchange messages directly. This is the standard assumption in the original FLP setting. An algorithm for a sparse connected topology can be viewed as an algorithm for the complete topology that simply never uses the additional edges; therefore, if consensus were possible on a sparse topology, it would also be possible on the complete topology. Contrapositively, impossibility on the complete topology implies impossibility on the sparse topology.
+
+\begin{smjtheorem}[Fischer--Lynch--Paterson, 1985~\cite{flp1985}]\label{thm:flp}
+There is no deterministic algorithm that, in every admissible execution of an asynchronous message-passing system of $n\ge 2$ processes in which at most one process crashes, satisfies agreement, validity, and termination.
+\end{smjtheorem}
+
+\begin{smjremark}[Significance]
+The FLP theorem is widely regarded as one of the most important results in the theory of distributed computing. It shows that, under the stated assumptions, agreement, validity, termination, and tolerance of one crash failure cannot all be guaranteed simultaneously by a deterministic algorithm. Every practical consensus system (Paxos, Raft, ZooKeeper Atomic Broadcast) is, in a precise sense, an engineering response to this theorem.
+\end{smjremark}
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 4  --  PROOF OF THE FLP THEOREM
+% ══════════════════════════════════════════════════════════

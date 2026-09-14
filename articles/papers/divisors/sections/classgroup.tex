@@ -1,0 +1,100 @@
+\section{The divisor class group}\label{sec:cl}
+% ===============================================================
+
+\subsection{The degree descends to classes}
+
+\begin{smjproposition}\label{prop:descend}
+The degree induces a well-defined group homomorphism
+$\overline{\deg} : \Cl(\PP) \to \ZZ$, $[D] \mapsto \deg(D)$.
+\end{smjproposition}
+
+\begin{proof}
+If $[D] = [E]$ then $D - E \in \Prin(\PP) = \ker(\deg)$ by
+Theorem~\ref{thm:main}, so $\deg(D) - \deg(E) = \deg(D-E) = 0$. Hence
+$\deg(D)$ depends only on $[D]$. It is a homomorphism because $\deg$ is one and
+the quotient map is one.
+\end{proof}
+
+\begin{smjproposition}\label{prop:surj}
+$\overline{\deg}$ is surjective.
+\end{smjproposition}
+
+\begin{proof}
+Given $n \in \ZZ$, pick any $p \in \PP$; then $\overline{\deg}([n(p)]) =
+\deg(n(p)) = n$.
+\end{proof}
+
+\begin{smjproposition}\label{prop:inj}
+$\overline{\deg}$ is injective.
+\end{smjproposition}
+
+\begin{proof}
+A homomorphism of groups is injective if and only if its kernel is trivial, so it
+suffices to show $\overline{\deg}([D]) = 0$ forces $[D] = 0$. If
+$\overline{\deg}([D]) = 0$ then $\deg(D) = 0$, so $D \in \ker(\deg) =
+\Prin(\PP)$ by Theorem~\ref{thm:main}, and hence $[D] = 0$ in the quotient.
+\end{proof}
+
+\begin{theorem}\label{thm:cl}
+$\overline{\deg} : \Cl(\PP) \to \ZZ$ is an isomorphism; in particular
+$\Cl(\PP) \cong \ZZ$.
+\end{theorem}
+
+\begin{proof}
+By Propositions~\ref{prop:descend}, \ref{prop:surj} and \ref{prop:inj} it is a
+well-defined bijective group homomorphism.
+\end{proof}
+
+\subsection{The same computation, packaged}
+
+It is worth seeing that the three verifications above are exactly the content of
+one standard theorem, since this both shortens the argument and explains what
+made it work.
+
+\begin{smjproposition}
+$\Cl(\PP) \cong \ZZ$.
+\end{smjproposition}
+
+\begin{proof}
+By Theorem~\ref{thm:main}, $\Prin(\PP) = \ker(\deg)$, so
+\[
+\Cl(\PP) = \frac{\Div(\PP)}{\Prin(\PP)} = \frac{\Div(\PP)}{\ker(\deg)}
+\;\cong\; \im(\deg)
+\]
+by the First Isomorphism Theorem. Finally $\deg(n(p)) = n$ for any fixed $p$, so
+$\im(\deg) = \ZZ$.
+\end{proof}
+
+The point is that well-definedness, injectivity and surjectivity in
+Section~5.1 are precisely the three things the First Isomorphism Theorem checks
+in one step, once one knows $\Prin(\PP) = \ker(\deg)$. All the mathematical
+content sits in Theorem~\ref{thm:main}.
+
+\subsection{Normal form and interpretation}
+
+\begin{smjproposition}\label{prop:normalform}
+Every $D \in \Div(\PP)$ satisfies $D \sim (\deg D)(\infty)$, and the integer
+$\deg D$ is the unique one with this property.
+\end{smjproposition}
+
+\begin{proof}
+The divisor $D - (\deg D)(\infty)$ has degree $\deg(D) - \deg(D) = 0$, hence lies
+in $\ker(\deg) = \Prin(\PP)$ by Theorem~\ref{thm:main}; that is,
+$D \sim (\deg D)(\infty)$. If also $D \sim n(\infty)$ then
+$n = \deg(n(\infty)) = \deg(D)$ by Proposition~\ref{prop:descend}.
+\end{proof}
+
+\begin{remark}
+Note that Proposition~\ref{prop:normalform} is a consequence of
+Theorem~\ref{thm:main} and cannot be used in its proof.
+\end{remark}
+
+So on $\PP$ a divisor class carries exactly one piece of information: an integer.
+Unwinding the definitions, this says something concrete about functions. A
+rational function is determined by its zeros and poles up to a constant factor
+(Proposition~\ref{prop:kernel}); a prescribed configuration of zeros and poles is
+realised by a function exactly when the multiplicities balance
+(Theorem~\ref{thm:main}); and what survives of a configuration after allowing
+oneself to modify it by any function at all is precisely its total multiplicity.
+
+% ===============================================================

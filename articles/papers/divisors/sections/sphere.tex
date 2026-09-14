@@ -1,0 +1,144 @@
+\section{The Riemann sphere and the projective line}\label{sec:sphere}
+% ===============================================================
+
+We now build the space on which $\infty$ becomes an ordinary point. We need only
+its construction, its compactness, its two charts, and the identification of its
+meromorphic functions.
+
+\subsection{The complex projective line}
+
+\begin{definition}
+The \emph{complex projective line} is
+$\PP = \big(\CC^2 \setminus \{(0,0)\}\big) / \!\sim$, where
+$(X,Y) \sim (\lambda X, \lambda Y)$ for all $\lambda \in \CC^\times$. The class
+of $(X,Y)$ is written $[X : Y]$.
+\end{definition}
+
+We give $\PP$ the quotient topology induced by
+$\pi : \CC^2 \setminus\{(0,0)\} \to \PP$, so that $U \subseteq \PP$ is open
+exactly when $\pi^{-1}(U)$ is open.
+
+\begin{smjproposition}\label{prop:compact}
+$\PP$ is compact and connected.
+\end{smjproposition}
+
+\begin{proof}
+Let $S^3 = \{(X,Y) \in \CC^2 : |X|^2 + |Y|^2 = 1\}$, a compact connected subset
+of $\CC^2 \setminus \{(0,0)\}$. Every class $[X:Y]$ has a representative on
+$S^3$, namely $(X,Y)/\sqrt{|X|^2+|Y|^2}$, so $\pi|_{S^3} : S^3 \to \PP$ is
+surjective. It is continuous, and continuous images of compact (respectively
+connected) spaces are compact (respectively connected).
+\end{proof}
+
+\begin{remark}
+That $\PP$ is Hausdorff and second countable is a routine verification which we
+omit; both are needed for $\PP$ to be a complex manifold in the usual sense, and
+neither is used in any argument below beyond the standing assumption that $\PP$
+is a Riemann surface.
+\end{remark}
+
+\subsection{The standard affine charts}
+
+Put $U_0 = \{[X:Y] : Y \neq 0\}$ and $U_1 = \{[X:Y] : X \neq 0\}$, and define
+\[
+\phi_0 : U_0 \to \CC,\ [X:Y] \mapsto \tfrac{X}{Y}, \qquad
+\phi_1 : U_1 \to \CC,\ [X:Y] \mapsto \tfrac{Y}{X}.
+\]
+
+\begin{smjproposition}
+$\phi_0$ and $\phi_1$ are bijections; each of $U_0, U_1$ is thus identified with
+a copy of $\CC$.
+\end{smjproposition}
+
+\begin{proof}
+We argue for $\phi_0$. Let $\psi_0 : \CC \to U_0$, $z \mapsto [z:1]$. Then
+$\phi_0(\psi_0(z)) = z/1 = z$. Conversely let $[X:Y] \in U_0$, so $Y \neq 0$;
+taking $\lambda = Y^{-1}$ in the equivalence relation gives $[X:Y] = [X/Y : 1]$,
+whence $\psi_0(\phi_0([X:Y])) = [X/Y : 1] = [X:Y]$. So $\phi_0$ is a bijection
+with inverse $\psi_0$. Similarly $\phi_1$ is a bijection with inverse
+$\psi_1(z) = [1:z]$.
+\end{proof}
+
+On the overlap $U_0 \cap U_1 = \{[X:Y] : X, Y \neq 0\}$ the transition map is
+\[
+\phi_1 \circ \phi_0^{-1}(z) = \tfrac{1}{z}, \qquad z \in \CC^\times,
+\]
+which is holomorphic. Hence the two charts make $\PP$ a Riemann surface.
+
+\subsection{The point at infinity}
+
+Every point of $U_0$ is uniquely $[z:1]$ with $z \in \CC$, so $U_0$ is a copy of
+$\CC$. Exactly one point of $\PP$ is missing from $U_0$, namely $[1:0]$. We call
+it the \emph{point at infinity} and write $\infty$, so that
+\[
+\PP = \CC \cup \{\infty\}.
+\]
+
+\begin{remark}[What $\infty$ is doing]\label{rem:infinity}
+It is worth pausing on why this one extra point changes anything. In $\CC$, the
+statement ``$f(z)$ tends to infinity as $|z| \to \infty$'' is a statement about a
+limiting process, not about the value of $f$ anywhere. Adjoining $\infty$ turns
+it into an ordinary local statement: the chart $U_1$ supplies the coordinate
+$w = 1/z$ centred at $\infty$, and the behaviour of $f$ ``for large $z$'' becomes
+the behaviour of $w \mapsto f(1/w)$ near $w = 0$ --- an ordinary zero or pole, to
+be analysed by Corollary~\ref{cor:localorder} like any other. Concretely, the
+polynomial $z$ has no zeros or poles in $\CC$ apart from its zero at the origin,
+and looks unbalanced; on $\PP$ it has a simple zero at $0$ and a simple pole at
+$\infty$, and balances. Geometrically, $\PP$ is the sphere obtained by wrapping
+the plane up and capping it off with a single point, which is why it is also
+called the Riemann sphere; compactness (Proposition~\ref{prop:compact}) is the
+precise form of ``capped off'', and it is what drives every global result below.
+\end{remark}
+
+\subsection{Meromorphic functions on $\PP$}
+
+\begin{definition}\label{def:meroPP}
+A function $f$ on $\PP$ is \emph{meromorphic} if it is not identically $\infty$
+and if, in each of the two charts, it is represented by a meromorphic function of
+one complex variable in the sense of Definition~\ref{def:mero}. Explicitly: $z
+\mapsto f(z)$ is meromorphic on $\CC$, and $w \mapsto f(1/w)$ is meromorphic near
+$w = 0$.
+\end{definition}
+
+\begin{remark}
+The exclusion of the constant $\infty$ is needed: as a holomorphic map $\PP \to
+\PP$ it is perfectly good, but it is not a rational function and would falsify
+Theorem~\ref{thm:rational}.
+\end{remark}
+
+\begin{theorem}\label{thm:rational}
+Every meromorphic function on $\PP$ is rational: on the chart $\CC = U_0$ it is
+given by an element of $\CC(z)$.
+\end{theorem}
+
+\begin{proof}
+Let $f$ be meromorphic on $\PP$. The set of poles of $f$ is discrete and closed
+in $\PP$; as $\PP$ is compact (Proposition~\ref{prop:compact}), it is finite.
+Let $p_1, \dots, p_k \in \CC$ be the poles lying in $\CC$, of orders
+$k_1, \dots, k_k$, and put $K = \sum_i k_i$ and
+$g(z) := f(z)\prod_{i=1}^{k}(z-p_i)^{k_i}$.
+
+By Proposition~\ref{prop:polefact}, multiplying by $(z-p_i)^{k_i}$ removes the
+pole at $p_i$, so $g$ is holomorphic on all of $\CC$, i.e.\ entire. We claim it
+has polynomial growth. Indeed, $f$ is meromorphic at $\infty$, so in the
+coordinate $w = 1/z$ it has at worst a pole there, say of order $N \geq 0$; hence
+$|f(z)| \leq C_1 |z|^{N}$ for $|z|$ large. Also
+$\big|\prod_i (z-p_i)^{k_i}\big| \leq C_2|z|^{K}$ for $|z|$ large. Therefore
+$|g(z)| \leq C |z|^{N+K}$ for $|z| \geq R$, for suitable constants.
+
+An entire function with $|g(z)| \leq C|z|^{d}$ for large $|z|$ is a polynomial of
+degree at most $d$: by the Cauchy estimates, its Taylor coefficients satisfy
+$|c_n| \leq C \rho^{d-n}$ for all $\rho \geq R$, which forces $c_n = 0$ for
+$n > d$. Hence $g \in \CC[z]$ and
+$f = g \big/ \prod_i (z-p_i)^{k_i} \in \CC(z)$.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:rational} is the reason a polynomial deserves to be viewed on
+$\PP$: as a function on $\CC$ it is holomorphic, but as a meromorphic function on
+$\PP$ it acquires a pole at $\infty$, of order equal to its degree
+(Example~\ref{ex:poly}). From now on we use ``meromorphic function on $\PP$'' and
+``element of $\CC(z)$'' interchangeably.
+\end{remark}
+
+% ===============================================================

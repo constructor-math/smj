@@ -1,0 +1,37 @@
+% ============================================================
+%  main.tex — The Student Mathematical Journal
+%  Volume I · Fall 2026
+%  Constructor University Mathematics Society
+% ============================================================
+\documentclass[11pt, twoside, a4paper]{article}
+\usepackage{smj}
+
+\begin{document}
+
+\smjvolume{
+    Inaugural Edition%
+    \quad\textbullet\quad%
+    Volume I%
+    \quad\textbullet\quad%
+    Fall 2026%
+}
+
+% ── Front Matter ────────────────────────────────────────────
+\pagenumbering{roman}
+\input{front/f1-cover}
+\input{front/f2-info}
+%   Table of Contents ──────────────────────────────────────
+\input{front/f3-toc}
+\clearpage
+
+% ── Editorial ────────────────────────────────────────────────
+\pagenumbering{arabic}
+\input{editorial/e1-thisvolume}
+\input{editorial/e2-editorial}
+% ── Articles ────────────────────────────────────────────────
+\input{articles/a1-shor}
+\input{articles/a2-shannon}
+\input{articles/a3-putt-putt}
+\input{articles/a4-divisors}
+\input{articles/a5-agreement}
+\end{document}

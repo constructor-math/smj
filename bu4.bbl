@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{Ahlfors}
+L.~V. Ahlfors.
+\newblock {\em Complex Analysis}.
+\newblock McGraw--Hill, 3 edition, 1979.
+
+\bibitem{Forster}
+O.~Forster.
+\newblock {\em Lectures on Riemann Surfaces}, volume~81 of {\em Graduate Texts
+  in Mathematics}.
+\newblock Springer, 1981.
+
+\bibitem{FreitagBusam}
+E.~Freitag and R.~Busam.
+\newblock {\em Complex Analysis}.
+\newblock Springer, 2 edition, 2009.
+
+\bibitem{GriffithsHarris}
+P.~Griffiths and J.~Harris.
+\newblock {\em Principles of Algebraic Geometry}.
+\newblock Wiley, 1978.
+
+\bibitem{Hartshorne}
+R.~Hartshorne.
+\newblock {\em Algebraic Geometry}, volume~52 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer, 1977.
+
+\bibitem{Miranda}
+R.~Miranda.
+\newblock {\em Algebraic Curves and Riemann Surfaces}, volume~5 of {\em
+  Graduate Studies in Mathematics}.
+\newblock American Mathematical Society, 1995.
+
+\bibitem{GAGA}
+J.-P. Serre.
+\newblock G\'eom\'etrie alg\'ebrique et g\'eom\'etrie analytique.
+\newblock {\em Annales de l'Institut Fourier}, 6:1--42, 1956.
+
+\bibitem{Stacks}
+{The Stacks Project Authors}.
+\newblock The stacks project.
+\newblock Tag 0BXJ.
+
+\end{thebibliography}

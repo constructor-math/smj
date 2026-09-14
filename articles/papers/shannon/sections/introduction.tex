@@ -1,0 +1,42 @@
+\section{Introduction: How Can an Unreliable Channel Carry a Reliable Message?}
+
+\subsection{A Message Damaged in Transit}
+
+Suppose Alice wants to send Bob one binary bit, either a $0$ or a $1$. The bit travels through some physical medium, such as a wire, an optical fiber, or a radio link. We will call this medium a \emph{channel}. Real channels are imperfect: interference, a weak signal, or faults in the equipment may cause the bit to flip during transmission. Alice may send a $1$ while Bob receives a $0$.
+
+The important problem is not simply that an error occurred. Bob sees only the received $0$, so he cannot determine whether Alice sent a $0$ correctly or whether she sent a $1$ that was flipped. The received bit alone gives him no way to distinguish these two cases. How can Alice make her message easier to recover?
+
+One simple idea is to repeat the bit three times:
+\[
+0\longmapsto 000,
+\qquad
+1\longmapsto 111.
+\]
+Suppose Alice wants to send $1$, and therefore transmits $111$. If noise changes the second bit, Bob receives $101$. He can choose the value that occurs most often and recover the original $1$. This procedure is called \emph{majority decoding}, and the construction is called a \emph{repetition code}.
+
+The two additional bits do not add anything new to Alice's message. Instead, they provide \emph{redundancy}: extra structure that helps Bob recognize and correct an error. The repetition code is not perfect. If two of the three transmitted bits flip, for example $111\to100$, majority decoding produces the wrong answer. Nevertheless, this small example demonstrates the basic purpose of coding theory: the channel may damage the transmitted object, yet a carefully chosen representation can allow the receiver to recover the original message.
+
+\subsection{The Price of Reliability}
+
+We corrected one possible error, but we paid for this protection. Alice used the channel three times to communicate only one bit of new information. A message of one thousand bits would become three thousand transmitted bits under the same repetition scheme. We could instead repeat each bit five, seven, or some larger odd number of times, making majority decoding more resistant to errors, but this would consume still more time, energy, and bandwidth.
+
+This exposes the main trade-off in coding theory. We would like a code to be \emph{reliable}, meaning that the probability that the final decoded message differs from the original message can be made very small. At the same time, we want to transmit information at a high rate rather than spending nearly every channel use on repeated data. Finally, the sender and receiver must be able to encode and decode without an unreasonable amount of computation.
+
+The repetition code performs the necessary task, but it does so inefficiently. This naturally leads us to ask two questions. Can redundancy be arranged more intelligently, so that the probability of a decoding error becomes small without the transmission rate collapsing toward zero? If this is possible, what is the greatest rate that a particular noisy channel can support?
+
+\subsection{The Destination: Shannon's Answer and Arıkan's Construction}
+
+Claude Shannon gave a surprising answer in 1948. This paper focuses on discrete memoryless channels, a specific class that will be defined in Section 2, rather than attempting to cover every possible communication model. A channel in this class has a limiting value called its \emph{capacity}. Informally, Shannon's noisy-channel coding theorem says the following \cite{Shannon1948}:
+
+\begin{quote}
+For the discrete memoryless channels considered in this paper, every communication rate below the channel capacity can be achieved by families of increasingly long codes whose probability of a decoding error approaches zero. If the communication rate is above capacity, reliable communication is impossible.
+\end{quote}
+
+This statement does not say that noise disappears, nor does it promise that one fixed, finite code will never fail. Instead, it says that below capacity we can choose longer and more carefully designed codes so that decoding the wrong message becomes as unlikely as desired. The theorem therefore gives a boundary between rates that can support reliable communication and rates that cannot.
+
+Shannon's argument was mainly an existence proof. It showed that sufficiently good codes must exist, but it did not give engineers a direct and computationally efficient procedure for constructing and decoding them. Knowing the destination is not the same as knowing how to reach it. This left an important challenge: can we describe an explicit family of codes whose rate approaches capacity, whose probability of error approaches zero, and whose encoding and decoding remain manageable?
+
+Polar codes, introduced by Erdal Arıkan, provide a particularly clean answer for symmetric binary-input memoryless channels \cite{Arikan2009}. Their key idea is \emph{channel polarization}: several identical uses of a noisy channel are combined and reorganized into synthetic channels that become increasingly reliable or increasingly unreliable. Information is placed in the reliable channels, while the unreliable channels are fixed to values known by both the sender and receiver.
+
+We will build toward this idea gradually. We first formalize the communication process suggested by the repetition example and introduce rate, Hamming distance, and linear codes. We then study the binary symmetric channel and use entropy to understand Shannon's capacity limit. Finally, we return to the construction problem and use the binary erasure channel as a transparent worked example of polarization. This path takes us from the first question---whether reliable communication is possible---to an explicit method for approaching the limit Shannon discovered.
+

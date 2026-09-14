@@ -1,0 +1,40 @@
+% ============================================================
+%  articles/a2-shannon.tex
+%  Shannon's Theorem and Polar Codes — Aly Assaf
+% ============================================================
+
+\smjarticle{art:shannon}{%
+  title       = {Shannon's Theorem and Polar Codes},
+  % cover-title = {},
+  % toc-title   = {},
+  author      = {Aly Assaf},
+  year        = {ECE'27},
+  affil       = {UgS II},
+  category    = {article},
+  abstract    = {Reliable communication over a noisy channel requires redundancy, but adding
+		redundancy lowers the communication rate. For the discrete memoryless channels
+		considered in this paper, Shannon's noisy-channel coding theorem resolves this
+		tension by identifying a capacity: at rates below capacity, families of
+		increasingly long codes can make block-decoding errors arbitrarily unlikely,
+		whereas rates above capacity cannot support reliable communication. The theorem
+		establishes what is possible, but it does not itself provide an explicit and
+		efficient code. This paper introduces polar codes as one structured response to
+		that construction problem. Beginning with a repetition-code example, we develop
+		the communication model, the binary symmetric channel, rate, Hamming distance,
+		and linear codes. We then use typical noise patterns and binary entropy to
+		motivate the capacity of the binary symmetric channel and introduce mutual
+		information for more general channels. Finally, an information-theoretic preview
+		and two- and four-bit binary erasure channel examples show how a recursive
+		transform creates synthetic channels of unequal quality. Placing information in
+		reliable positions and freezing the remaining positions to known values produces
+		a polar code that can be encoded and decoded efficiently. Together, Shannon's
+		theorem and polar codes illustrate the relationship between a theoretical
+		communication limit and one explicit method for approaching it.},
+}
+
+% Theorem numbering
+\counterwithin{thrmctr}{section}
+%
+\import{articles/papers/shannon/}{main.tex}
+%
+\counterwithout{thrmctr}{section}

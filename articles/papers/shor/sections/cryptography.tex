@@ -1,0 +1,108 @@
+% ============================================================
+%  SECTION 2 — Introduction to Cryptography
+% ============================================================
+\section{Introduction to Cryptography}
+
+Cryptography is the study of mathematical techniques for securing communication
+and data in the presence of adversaries. Its primary goal is to ensure the
+confidentiality, integrity, authenticity, and non-repudiation of information.
+We are mainly dealing with two subjects in it: Encryption \& Decryption.
+
+\begin{smjdefinition}
+In cryptography, \textbf{encryption} (more specifically, \textbf{encoding})
+is the process of transforming information in a way that, ideally, only
+authorized parties can decode.
+\end{smjdefinition}
+
+\subsection{RSA}
+
+The RSA cryptosystem was introduced in 1977 by Rivest, Shamir, and Adleman
+\cite{rsa1978}, from whom it takes its name. It is a public-key encryption
+scheme designed to securely encode messages over insecure communication
+channels by relying on the computational difficulty of factoring large
+composite integers. Let's discuss how it works and what is the algorithm
+behind it.
+
+\subsection{Algorithm of RSA}
+
+Take Alice and Bob. Alice and Bob both have two big prime numbers (in general
+around 313 digits). Let's name the prime numbers of Alice $P_1$ and $P_2$,
+and Bob's $P_3$ and $P_4$.
+
+Both Alice and Bob are going to multiply their two big prime numbers to get a
+new big semiprime number. Let's call them respectively $SP_1$ and $SP_2$.
+
+\begin{smjdefinition}
+A \textbf{symmetric} (private-key) cryptosystem uses a single secret key
+shared between sender and receiver --- the same key encrypts and decrypts the
+message. The problem is that both parties must first agree on the key, which
+requires a secure channel to begin with.
+
+An \textbf{asymmetric} (public-key) cryptosystem solves this by using a pair
+of mathematically linked keys: a \textbf{public key}, shared openly and used
+to encrypt, and a \textbf{private key}, kept secret and used to decrypt. The
+two keys are linked such that encrypting with one can only be undone by the
+other. Crucially, deriving the private key from the public key is
+computationally infeasible.
+\end{smjdefinition}
+
+$P_1$ and $P_2$ are then called the private keys of Alice, $SP_1$ is her
+public key. And similarly for Bob.
+
+If Alice wants to send something to Bob, she is going to hash her message in
+a way such that she uses his public key $SP_2$, and the only way to decrypt
+her message, must be that her recipient knows the two big prime numbers $P_3$
+and $P_4$, that created the public key $SP_2$. In our case, Bob knows them,
+but no one else does. Both the public keys of Alice and Bob can be viewed by
+anyone, as well as her hashed message. However, due to the fact that only Bob
+knows what $P_3$ and $P_4$ are, he is the only one able to decode the hashed
+message.
+
+\begin{smjnote}
+That we are not covering how the message is hashed, and we won't. This part
+is not relevant for the rest of the article and thus is out of scope.
+\end{smjnote}
+
+\begin{smjnote}
+RSA is an asymmetric key system because two different keys are used to send
+and to receive the message.
+\end{smjnote}
+
+\subsection{How to Make RSA Irrelevant?}
+
+The whole RSA is standing on one assumption: finding the prime factors of a
+semiprime number is a hard problem. More precisely, no polynomial-time
+classical algorithm for integer factorization has ever been found, and the
+best known classical algorithms still run in sub-exponential but
+super-polynomial time. For a $313$-digit semiprime number, even the most
+powerful supercomputers would take thousands of years to factor it. Thus, to
+break RSA, it is enough to find an efficient factoring algorithm --- one that
+runs in polynomial time. So far, no one has been able to do so on a classical
+computer.
+
+And this is where Shor's algorithm comes in.
+
+\begin{smjnote}
+Many have probably heard that factoring a semiprime number is an NP problem.
+While it is true, it does not really say anything about RSA being strong or
+not. Without entering into too much detail, an NP problem is just a problem
+where one can verify if a solution is correct in polynomial time \cite{arora2009},
+which is indeed possible in prime factorization: one can check if the product
+of 2 prime numbers is equal to the semiprime number. But it does not say
+anything about whether a problem is in P or not --- any problem in P (problems
+which we proved are solvable in polynomial time) is also in NP; summing
+$3 + 5$ is also an NP problem.
+\end{smjnote}
+
+\subsection{Introduction to Shor's Algorithm}
+
+Shor's algorithm, developed by Peter Shor in 1994 \cite{shor1994}, is a
+quantum algorithm for efficiently factoring large integers. It runs in
+polynomial time on a quantum computer and poses a fundamental threat to
+classical cryptographic systems such as RSA, whose security relies on the
+hardness of integer factorization.
+
+But before explaining how it works, you may have noticed that there is a quite
+scary word in its definition, ``quantum''. Thus, before explaining the
+algorithm and how it is implemented, for the sake of the reader's comfort,
+I will briefly introduce the world of Quantum Computing.

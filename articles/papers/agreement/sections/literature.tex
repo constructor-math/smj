@@ -1,0 +1,32 @@
+\section{Literature and Problem Statement}\label{sec:literature}
+
+The study of distributed coordination has a rich history. We summarise the key results we rely on, and then state the central problem of this paper.
+
+\textbf{Logical clocks and causal order.} Lamport~\cite{lamport1978} introduced the happened-before relation and logical clocks; Fidge~\cite{fidge1988} and Mattern~\cite{mattern1989} independently extended this to vector clocks that fully characterise causality. We borrow these results in \Cref{subsec:logical-time}.
+\\[6pt]
+\textbf{Global snapshots.} Chandy and Lamport~\cite{chandy1985} showed how to record a consistent global state of a running distributed system using marker messages on FIFO channels, a result we use implicitly when reasoning about system states.
+\\[6pt]
+\textbf{Leader election.} A \emph{leader election algorithm} is a distributed algorithm whose goal is to have all processes in a network agree on a single distinguished process---the \emph{leader}---that will act as coordinator. Each process starts as a candidate and the algorithm terminates with exactly one process declaring itself leader and all others acknowledging it. Leader election is a weaker form of coordination than full consensus, yet solving it efficiently in large networks is already non-trivial. A related but distinct coordination primitive is \emph{mutual exclusion}, in which processes contend for exclusive access to a shared resource rather than for a single distinguished identity; Ricart and Agrawala~\cite{ricartagrawala1981} gave a classic permission-based algorithm for this problem. This illustrates that distributed coordination includes tasks with different correctness conditions from leader election and consensus.
+\\[6pt]
+Chang and Roberts~\cite{changRoberts1979} gave an $\bigO(n^2)$ election algorithm on rings; Peterson~\cite{peterson1982} and Dolev, Klawe, and Rodeh~\cite{dolevKlaweRodeh1982} improved this to $\bigO(n\log n)$ worst-case. Gallager, Humblet, and Spira~\cite{ghs1983} gave a distributed algorithm for building a minimum-weight spanning tree in $\bigO(|E|+n\log n)$ messages; since the root of a spanning tree is a natural choice of leader, their algorithm also solves leader election as a by-product. These results establish that useful coordination primitives are achievable, which makes the following impossibility all the more striking.
+\\[6pt]
+\textbf{The consensus problem.} The central problem of this paper is:
+
+\begin{smjdefinition}[Consensus]\label{def:consensus}
+In the \emph{consensus} problem, each process $p_i$ starts with an input value $v_i \in \{0,1\}$. We restrict to binary inputs; any finite set of values can be encoded as bit-strings, so a binary consensus primitive can in principle serve as a building block for deciding among any number of alternatives. We note, however, that this reduction from multi-valued to binary consensus is standard but not entirely free of subtlety: one must argue that repeated binary decisions can be composed without violating agreement or validity for the original multi-valued problem, which we do not develop here. The following properties must hold:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Agreement:} All correct processes decide the same value $d$.
+    \item \textbf{Validity:} The decided value $d$ was proposed by some process (i.e.\ $d = v_i$ for some $i$).
+    \item \textbf{Termination:} Every correct process eventually decides.
+\end{enumerate}
+Validity as stated here is deliberately weak: it would, in isolation, permit degenerate rules such as always deciding the fixed input of a single distinguished process. We retain this weak form because the impossibility result proved in \Cref{sec:proof} does not require a stronger validity condition; proving impossibility under the weakest reasonable validity condition makes the theorem \emph{stronger}, not weaker, since it rules out an even larger space of candidate algorithms.
+\end{smjdefinition}
+
+Consensus is not merely a theoretical puzzle. Chandra and Toueg~\cite{chandra1996} showed that \emph{atomic broadcast}---the property that all nodes deliver all messages in the same total order, meaning every node processes message number $k$ before message number $k+1$, and every node agrees on which message is number $k$---is reducible to consensus and, in the relevant asynchronous crash-failure model, consensus and atomic broadcast are computationally equivalent. Atomic broadcast is what makes distributed databases consistent: it is the reason your bank balance does not disagree between two ATMs.
+\\[6pt]
+\textbf{Our goal.} In this paper we prove the Fischer--Lynch--Paterson impossibility theorem (\Cref{thm:flp}), which shows that consensus is impossible in the fully asynchronous model even with a single crash failure. We then study Paxos~\cite{lamport1998} as the canonical practical algorithm that circumvents this barrier under a weaker (but realistic) assumption.
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 3  --  MAIN RESULT
+% ══════════════════════════════════════════════════════════

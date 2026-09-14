@@ -1,0 +1,230 @@
+\section{Orders and divisors on $\PP$}\label{sec:divisors}
+% ===============================================================
+
+\subsection{Local parameters and the order at a point}
+
+To treat $\infty$ on the same footing as every other point we fix, once and for
+all, a coordinate centred at each point.
+
+\begin{definition}\label{def:localparam}
+For $p \in \PP$ the \emph{local parameter at $p$} is
+\[
+t_p(z) := z - p \quad (p \in \CC), \qquad t_\infty(z) := \tfrac{1}{z}.
+\]
+\end{definition}
+
+In both cases $t_p$ is a holomorphic coordinate on a neighbourhood of $p$
+vanishing exactly to order one at $p$: for finite $p$ this is clear, and
+$t_\infty = w$ is precisely the coordinate of the chart $U_1$.
+
+\begin{smjproposition}\label{prop:ord}
+Let $f \in \CC(z)^\times$ and $p \in \PP$. There are a unique integer $m$ and a
+function $u$, holomorphic and nonvanishing at $p$, with $f = t_p^{\,m} u$ near
+$p$. We write $\ord_p(f) := m$.
+\end{smjproposition}
+
+\begin{proof}
+For $p \in \CC$ this is Corollary~\ref{cor:localorder}. For $p = \infty$, apply
+Corollary~\ref{cor:localorder} to the function $w \mapsto f(1/w)$ at $w = 0$,
+which is meromorphic there by Definition~\ref{def:meroPP} and not identically
+zero since $f \neq 0$; the resulting factorisation $f(1/w) = w^m u(w)$ with
+$u(0) \neq 0$ is the assertion, as $t_\infty = w$. Uniqueness in both cases is
+Lemma~\ref{lem:unique}.
+\end{proof}
+
+So $\ord_p(f) > 0$ means $f$ has a zero of that order at $p$, $\ord_p(f) < 0$
+means a pole of order $-\ord_p(f)$, and $\ord_p(f) = 0$ means $f$ is finite and
+nonzero at $p$. Note that $\ord_\infty(f) = \ord_0\big(f(1/w)\big)$, which is the
+concrete recipe for computing at infinity.
+
+\begin{example}\label{ex:ordinfty}
+For $f(z) = z$ we have $f(1/w) = 1/w = w^{-1}$, so $\ord_\infty(z) = -1$: the
+identity function has a simple pole at infinity. More generally $f(z) = z^n$
+gives $f(1/w) = w^{-n}$, so $\ord_\infty(z^n) = -n$.
+\end{example}
+
+\begin{smjproposition}\label{prop:ordhom}
+For all $f, g \in \CC(z)^\times$ and all $p \in \PP$,
+$\ord_p(fg) = \ord_p(f) + \ord_p(g)$.
+\end{smjproposition}
+
+\begin{proof}
+Near $p$ write $f = t_p^{\,m} u$ and $g = t_p^{\,n} v$ with $m = \ord_p(f)$,
+$n = \ord_p(g)$ and $u, v$ holomorphic and nonvanishing at $p$
+(Proposition~\ref{prop:ord}). Then $fg = t_p^{\,m+n}(uv)$, and $uv$ is again
+holomorphic and nonvanishing at $p$. By the uniqueness in
+Proposition~\ref{prop:ord}, $\ord_p(fg) = m+n$.
+\end{proof}
+
+\subsection{The divisor group}
+
+Each point of $\PP$ contributes one integer to the description of a function: its
+order there. All but finitely many of these integers are zero, since a nonzero
+rational function has only finitely many zeros and poles. A divisor is simply the
+record of all of them at once --- a bookkeeping device which turns the local
+integers of Proposition~\ref{prop:ord} into a single global object that can be
+added, subtracted, and quotiented.
+
+\begin{definition}
+The \emph{divisor group} of $\PP$ is the free abelian group on the points of
+$\PP$,
+\[
+\Div(\PP) := \bigoplus_{p \in \PP} \ZZ \cdot p .
+\]
+Its elements are the finite formal sums $D = \sum_{p \in \PP} n_p\,(p)$ with
+$n_p \in \ZZ$ almost all zero, added coefficientwise. The \emph{support} of $D$
+is $\supp(D) = \{p : n_p \neq 0\}$, a finite set.
+\end{definition}
+
+We write the point $p$ regarded as a divisor as $(p)$, so that a typical divisor
+reads $2(a) - 3(b) + (\infty)$. Being free abelian on the point set is exactly
+what makes the quotient computations of Sections~\ref{sec:cl} formal.
+
+\begin{definition}\label{def:effective}
+A divisor $D = \sum_p n_p (p)$ is \emph{effective}, written $D \geq 0$, if
+$n_p \geq 0$ for every $p$. For divisors $D, E$ we write $D \geq E$ to mean
+$D - E \geq 0$. For $U \subseteq \PP$ we write $D|_U := \sum_{p \in U} n_p (p)$
+for the divisor obtained by discarding the points outside $U$.
+\end{definition}
+
+\begin{definition}\label{def:deg}
+The \emph{degree} of $D = \sum_p n_p (p)$ is $\deg(D) := \sum_p n_p \in \ZZ$.
+\end{definition}
+
+\begin{smjproposition}
+$\deg : \Div(\PP) \to \ZZ$ is a group homomorphism.
+\end{smjproposition}
+
+\begin{proof}
+Addition of divisors is coefficientwise, so
+$\deg(D + E) = \sum_p (n_p + m_p) = \sum_p n_p + \sum_p m_p = \deg(D)+\deg(E)$,
+all sums being finite.
+\end{proof}
+
+\begin{example}
+If $D = 2(a) - 3(b) + (\infty)$ with $a,b \in \CC$ distinct, then
+$\deg(D) = 2 - 3 + 1 = 0$. The degree is a \emph{signed} count: it does not merely
+tally the points of the support.
+\end{example}
+
+\subsection{The divisor of a rational function}
+
+\begin{definition}\label{def:divmap}
+For $f \in \CC(z)^\times$ the \emph{divisor of $f$} is
+\[
+\divv(f) := \sum_{p \in \PP} \ord_p(f)\,(p) .
+\]
+\end{definition}
+
+This is a finite sum, hence really an element of $\Div(\PP)$: by
+Proposition~\ref{prop:reduced} a nonzero rational function has finitely many
+zeros and poles in $\CC$, and $\infty$ contributes at most one further nonzero
+term.
+
+\begin{smjproposition}\label{prop:divhom}
+The map $\divv : \CC(z)^\times \to \Div(\PP)$ is a group homomorphism from the
+multiplicative group of nonzero rational functions to the additive group of
+divisors.
+\end{smjproposition}
+
+\begin{proof}
+By Proposition~\ref{prop:ordhom}, for every $p$ we have
+$\ord_p(fg) = \ord_p(f) + \ord_p(g)$. Summing over $p$,
+\[
+\divv(fg) = \sum_p \ord_p(fg)\,(p) = \sum_p \big(\ord_p(f)+\ord_p(g)\big)(p)
+= \divv(f) + \divv(g). \qedhere
+\]
+\end{proof}
+
+We record the basic computations, in increasing generality.
+
+\begin{smjproposition}\label{prop:divlinear}
+For every $a \in \CC$, $\ \divv(z-a) = (a) - (\infty)$.
+\end{smjproposition}
+
+\begin{proof}
+The function $z - a$ has a simple zero at $a$ and no other zero or pole in $\CC$,
+so $\ord_a = 1$ and $\ord_p = 0$ for $p \in \CC \setminus \{a\}$. At infinity,
+substituting $z = 1/w$,
+\[
+z - a = \tfrac{1}{w} - a = w^{-1}(1 - aw),
+\]
+and $1 - aw$ is holomorphic and nonzero at $w = 0$; by
+Proposition~\ref{prop:ord}, $\ord_\infty(z-a) = -1$. Hence
+$\divv(z-a) = (a) - (\infty)$.
+\end{proof}
+
+\begin{smjproposition}\label{prop:divconst}
+$\divv(c) = 0$ for every $c \in \CC^\times$.
+\end{smjproposition}
+
+\begin{proof}
+A nonzero constant is holomorphic and nonvanishing at every point of $\PP$, so
+$\ord_p(c) = 0$ for all $p$. (The converse --- that only constants have zero
+divisor --- is Proposition~\ref{prop:kernel}.)
+\end{proof}
+
+\begin{example}\label{ex:worked}
+Let us compute $\divv(f)$ for $f(z) = \dfrac{(z-1)^2}{z}$ point by point.
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15em]
+\item \emph{At $p = 1$.} Write $f(z) = (z-1)^2 u(z)$ with $u(z) = 1/z$, which is
+holomorphic and nonzero at $1$. So $\ord_1(f) = 2$.
+\item \emph{At $p = 0$.} Write $f(z) = z^{-1} v(z)$ with $v(z) = (z-1)^2$, which
+is holomorphic and nonzero at $0$ (indeed $v(0) = 1$). So $\ord_0(f) = -1$.
+\item \emph{At other finite $p$.} Both numerator and denominator are holomorphic
+and nonzero, so $\ord_p(f) = 0$.
+\item \emph{At $p = \infty$.} Substituting $z = 1/w$,
+\[
+f(1/w) = \frac{(w^{-1}-1)^2}{w^{-1}}
+= \frac{w^{-2}(1-w)^2}{w^{-1}} = w^{-1}(1-w)^2 ,
+\]
+and $(1-w)^2$ is holomorphic and nonzero at $w=0$. So $\ord_\infty(f) = -1$.
+\end{itemize}
+Therefore
+\[
+\divv(f) = 2\,(1) - (0) - (\infty), \qquad \deg \divv(f) = 2 - 1 - 1 = 0 .
+\]
+The zero total is not an accident; it is Theorem~\ref{thmA}, and the reader may
+find it instructive to see where the contribution at $\infty$ came from: the
+numerator outgrew the denominator by one degree.
+\end{example}
+
+\begin{example}
+Similarly, for $f(z) = \dfrac{z^2-1}{z^3}$ one finds simple zeros at $1$ and
+$-1$, a pole of order $3$ at $0$, and, since the denominator outgrows the
+numerator by one degree, $\ord_\infty(f) = 3 - 2 = 1$. Hence
+\[
+\divv(f) = (1) + (-1) - 3\,(0) + (\infty),
+\]
+of degree $1 + 1 - 3 + 1 = 0$.
+\end{example}
+
+\begin{example}\label{ex:poly}
+Let $P(z) = c \prod_{j=1}^{r}(z-a_j)^{m_j}$ be a nonzero polynomial. By
+Propositions~\ref{prop:divhom}, \ref{prop:divlinear} and \ref{prop:divconst},
+\[
+\divv(P) = \sum_{j=1}^{r} m_j\big[(a_j) - (\infty)\big]
+= \sum_{j=1}^{r} m_j (a_j) - \Big(\sum_{j=1}^{r} m_j\Big)(\infty)
+= \sum_{j=1}^{r} m_j (a_j) - (\deg P)(\infty),
+\]
+the last step by Proposition~\ref{prop:degsum}. So a polynomial of degree $d$ has
+a pole of order exactly $d$ at infinity, and its divisor has degree $0$.
+\end{example}
+
+\subsection{Principal divisors}
+
+\begin{definition}\label{def:prin}
+A divisor is \emph{principal} if it equals $\divv(f)$ for some
+$f \in \CC(z)^\times$. The set of principal divisors is
+\[
+\Prin(\PP) := \im\big(\divv : \CC(z)^\times \to \Div(\PP)\big),
+\]
+a subgroup of $\Div(\PP)$, since it is the image of the group homomorphism
+$\divv$ (Proposition~\ref{prop:divhom}).
+\end{definition}
+
+Thus the principal divisors are exactly the zero--pole configurations that some
+meromorphic function actually realises, and the question of the paper is to
+determine which those are.
+
+% ===============================================================

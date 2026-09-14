@@ -1,0 +1,28 @@
+% ============================================================
+%  articles/a5-agreement.tex
+%  Reaching the Impossible Agreement — Taha Hbirri
+% ============================================================
+
+\smjarticle{art:agreement}{%
+  title       = {Reaching the Impossible Agreement},
+  % cover-title = {},
+  % toc-title   = {},
+  author      = {Taha Hbirri},
+  year        = {CS'27},
+  affil       = {UgS V},
+  category    = {article},
+  abstract    = {Reaching agreement in a distributed system is a fundamental problem in
+    computer science. We study the consensus problem, in which each process proposes a
+    value and all correct processes must decide on a common value satisfying agreement,
+    validity, and termination. The central result of this paper is the
+    Fischer--Lynch--Paterson (FLP) impossibility theorem, which states that no
+    deterministic algorithm can solve consensus in an asynchronous message-passing
+    system tolerating even a single crash failure. We present the full proof. We then
+    study Paxos which, under partial synchrony, can achieve consensus through a
+    two-phase proposal protocol followed by a learning phase; its safety guarantee
+    reduces to a single combinatorial invariant. Notably, this safety guarantee holds
+    even without partial synchrony, which is needed only to guarantee that the protocol
+    eventually terminates. We prove this safety property.},
+}
+
+\import{articles/papers/agreement/}{main.tex}

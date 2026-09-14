@@ -1,0 +1,9 @@
+\section{Conclusion}\label{sec:conclusion}
+
+The problem of reaching agreement in a distributed system sits at the intersection of theory and engineering. We have shown that the three properties of consensus (agreement, validity, and termination) cannot all be simultaneously guaranteed by any deterministic algorithm when the network is asynchronous and even a single process may crash. This is the content of the Fischer--Lynch--Paterson theorem, and its proof rests on a single elegant observation: in an asynchronous system, an adversarial scheduler can always keep the global configuration in a state of genuine uncertainty, because silence is indistinguishable from failure.
+Yet the theorem does not close the door. Paxos demonstrates that weakening one assumption, replacing full asynchrony with partial synchrony, is enough to make consensus achievable. Its safety guarantee reduces to a combinatorial pigeonhole argument on quorum intersection, and that argument is the hidden backbone of every consistent distributed database deployed at scale today.
+The broader lesson is one of precision in assumptions. Impossibility results are not obstacles; they are maps. They tell us exactly which assumption to relax, and in doing so, they chart the design space for every practical system that follows.
+
+% ══════════════════════════════════════════════════════════
+% References
+% ══════════════════════════════════════════════════════════

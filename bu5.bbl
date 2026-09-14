@@ -1,0 +1,129 @@
+\begin{thebibliography}{10}
+
+\bibitem{benor1983}
+M.~Ben-Or.
+\newblock Another advantage of free choice: Completely asynchronous agreement
+  protocols.
+\newblock In {\em Proc. 2nd ACM Symposium on Principles of Distributed
+  Computing}, pages 27--30, 1983.
+
+\bibitem{burrows2006}
+M.~Burrows.
+\newblock The chubby lock service for loosely-coupled distributed systems.
+\newblock In {\em Proc. 7th USENIX Symposium on Operating Systems Design and
+  Implementation (OSDI)}, pages 335--350, 2006.
+
+\bibitem{castroliskov1999}
+M.~Castro and B.~Liskov.
+\newblock Practical byzantine fault tolerance.
+\newblock In {\em Proc. 3rd USENIX Symposium on Operating Systems Design and
+  Implementation (OSDI)}, pages 173--186, 1999.
+
+\bibitem{cht1996}
+T.~D. Chandra, V.~Hadzilacos, and S.~Toueg.
+\newblock The weakest failure detector for solving consensus.
+\newblock {\em Journal of the ACM}, 43(4):685--722, 1996.
+
+\bibitem{chandra1996}
+T.~D. Chandra and S.~Toueg.
+\newblock Unreliable failure detectors for reliable distributed systems.
+\newblock {\em Journal of the ACM}, 43(2):225--267, 1996.
+
+\bibitem{chandy1985}
+K.~M. Chandy and L.~Lamport.
+\newblock Distributed snapshots: Determining global states of distributed
+  systems.
+\newblock {\em ACM Transactions on Computer Systems}, 3(1):63--75, 1985.
+
+\bibitem{changRoberts1979}
+E.~J.~H. Chang and R.~Roberts.
+\newblock An improved algorithm for decentralised extrema-finding in circular
+  configurations of processes.
+\newblock {\em Communications of the ACM}, 22(5):281--283, 1979.
+
+\bibitem{corbett2012}
+J.~C. Corbett et~al.
+\newblock Spanner: Google's globally-distributed database.
+\newblock In {\em Proc. 10th USENIX Symposium on Operating Systems Design and
+  Implementation (OSDI)}, pages 251--264, 2012.
+
+\bibitem{dolevKlaweRodeh1982}
+D.~Dolev, M.~Klawe, and M.~Rodeh.
+\newblock An $o(n \log n)$ unidirectional distributed algorithm for extrema
+  finding in a circle.
+\newblock {\em Journal of Algorithms}, 3(3):245--260, 1982.
+
+\bibitem{dworkls1988}
+C.~Dwork, N.~A. Lynch, and L.~Stockmeyer.
+\newblock Consensus in the presence of partial synchrony.
+\newblock {\em Journal of the ACM}, 35(2):288--323, 1988.
+
+\bibitem{fidge1988}
+C.~J. Fidge.
+\newblock Timestamps in message-passing systems that preserve the partial
+  ordering.
+\newblock In {\em Proc. 11th Australian Computer Science Conference}, pages
+  56--66, 1988.
+
+\bibitem{flp1985}
+M.~J. Fischer, N.~A. Lynch, and M.~S. Paterson.
+\newblock Impossibility of distributed consensus with one faulty process.
+\newblock {\em Journal of the ACM}, 32(2):374--382, 1985.
+
+\bibitem{ghs1983}
+R.~G. Gallager, P.~A. Humblet, and P.~M. Spira.
+\newblock A distributed algorithm for minimum-weight spanning trees.
+\newblock {\em ACM Transactions on Programming Languages and Systems},
+  5(1):66--77, 1983.
+
+\bibitem{hunt2010}
+P.~Hunt, M.~Konar, F.~P. Junqueira, and B.~Reed.
+\newblock Zookeeper: Wait-free coordination for internet-scale systems.
+\newblock In {\em Proc. USENIX Annual Technical Conference}, 2010.
+
+\bibitem{lakshman2010}
+A.~Lakshman and P.~Malik.
+\newblock Cassandra: A decentralized structured storage system.
+\newblock {\em ACM SIGOPS Operating Systems Review}, 44(2):35--40, 2010.
+
+\bibitem{lamport1978}
+L.~Lamport.
+\newblock Time, clocks, and the ordering of events in a distributed system.
+\newblock {\em Communications of the ACM}, 21(7):558--565, 1978.
+
+\bibitem{lamport1998}
+L.~Lamport.
+\newblock The part-time parliament.
+\newblock {\em ACM Transactions on Computer Systems}, 16(2):133--169, 1998.
+
+\bibitem{mattern1989}
+F.~Mattern.
+\newblock Virtual time and global states of distributed systems.
+\newblock In {\em Proc. International Workshop on Parallel and Distributed
+  Algorithms}, pages 215--226, 1989.
+
+\bibitem{ongaro2014}
+D.~Ongaro and J.~Ousterhout.
+\newblock In search of an understandable consensus algorithm.
+\newblock In {\em Proc. USENIX Annual Technical Conference}, pages 305--320,
+  2014.
+
+\bibitem{peterson1982}
+G.~L. Peterson.
+\newblock An $o(n \log n)$ unidirectional algorithm for the circular extrema
+  problem.
+\newblock {\em ACM Transactions on Programming Languages and Systems},
+  4(4):758--762, 1982.
+
+\bibitem{ricartagrawala1981}
+G.~Ricart and A.~K. Agrawala.
+\newblock An optimal algorithm for mutual exclusion in computer networks.
+\newblock {\em Communications of the ACM}, 24(1):9--17, 1981.
+
+\bibitem{yin2019}
+M.~Yin, D.~Malkhi, M.~K. Reiter, G.~G. Gueta, and I.~Abraham.
+\newblock Hotstuff: Bft consensus with linearity and responsiveness.
+\newblock In {\em Proc. ACM Symposium on Principles of Distributed Computing
+  (PODC)}, pages 347--356, 2019.
+
+\end{thebibliography}

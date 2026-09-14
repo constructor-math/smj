@@ -1,0 +1,79 @@
+\section{Paxos: Engineering Around Impossibility}\label{sec:paxos}
+\subsection{The Setting}
+Paxos, introduced by Lamport~\cite{lamport1998}, is designed to make progress under \emph{partial synchrony}: the system is not always responsive, but eventually messages get through. The partial-synchrony model is due to Dwork, Lynch, and Stockmeyer~\cite{dworkls1988}. It is important to separate two guarantees here. \textbf{Safety} (\Cref{thm:paxos-safety}, proved in \Cref{subsec:paxos-safety}) holds unconditionally: it relies only on the quorum-intersection combinatorics of \Cref{lem:quorum} and is not violated even in a fully asynchronous run with arbitrarily delayed messages. \textbf{Liveness} (terminating with a decision) is what requires partial synchrony: under indefinite asynchrony, the adversarial scheduler of Step~3 can always find a way to delay messages forever and prevent termination, exactly as FLP predicts; partial synchrony is what eventually removes the adversary's ability to do so.
+\\[1pt]
+\textbf{Roles.} Processes play three (potentially overlapping) roles:\\[-0.7cm]
+\begin{itemize}[nosep]
+    \item \textbf{Proposers} suggest values.
+    \item \textbf{Acceptors} vote on proposals and form quorums.
+    \item \textbf{Learners} discover the chosen value.
+\end{itemize}
+\textbf{Quorums.}
+\begin{smjdefinition}[Quorum]{def:quorum}
+Let $\mathcal{A}$ be the set of all acceptors with $|\mathcal{A}| = n$. A \emph{quorum} is any subset $Q \subseteq \mathcal{A}$ satisfying $|Q| > n/2$. Equivalently, a quorum is any strict majority of the acceptors. We denote by $\mathfrak{Q}$ the family of all quorums: $\mathfrak{Q} = \{Q \subseteq \mathcal{A} : |Q| > n/2\}$.
+\end{smjdefinition}
+The key property is:
+\begin{smjlemma}[Quorum Intersection]{lem:quorum}
+Any two quorums $Q_1, Q_2 \in \mathfrak{Q}$ share at least one acceptor, i.e.\ $Q_1 \cap Q_2 \neq \emptyset$.
+\end{smjlemma}
+\vspace{-0.3cm}
+\begin{proof}
+By \Cref{def:quorum}, $|Q_1| > n/2$ and $|Q_2| > n/2$. If disjoint, then $|Q_1 \cup Q_2| = |Q_1| + |Q_2| > n$, which is impossible since $Q_1, Q_2 \subseteq \mathcal{A}$ and $|\mathcal{A}| = n$. Therefore $Q_1 \cap Q_2 \neq \emptyset$.
+\end{proof}
+\vspace{-0.3cm}
+This simple combinatorial (pigeonhole) fact is the core of the safety guarantee of Paxos: any two quorums used by the protocol must share a witness acceptor, which is what prevents two different values from ever being chosen.
+\vspace{-0.3cm}
+\subsection{The Protocol}
+\begin{algorithm}[H]
+\caption{Paxos (Single-Decree)}\label{alg:paxos}
+\begin{algorithmic}[1]
+\State \textbf{Phase 1a -- Prepare:} Proposer selects a globally unique proposal number $n\in\mathbb{N}$ and sends $\texttt{prepare}(n)$ to a quorum of acceptors.
+% ── Q9 CHANGE: clarify v_prev and n_prev are the acceptor's own history ──
+\State \textbf{Phase 1b -- Promise:} On receiving $\texttt{prepare}(n)$: if $n$ is greater than every proposal number for which the acceptor has already made a promise, the acceptor promises not to accept proposals numbered less than $n$ and replies $\texttt{promise}(n,\, v_{\mathrm{prev}},\, n_{\mathrm{prev}})$. Here $n_{\mathrm{prev}}$ is the proposal number of the highest-numbered proposal this acceptor has \emph{itself} previously accepted, and $v_{\mathrm{prev}}$ is the value associated with that accepted proposal. Both fields belong to the acceptor's own local history, not to the current proposer. The acceptor replies $(n_{\mathrm{prev}}, v_{\mathrm{prev}}) = \bot$ if it has not yet accepted any proposal.
+\State \textbf{Phase 2a -- Accept:} On receiving promises from a quorum: the proposer sends $\texttt{accept}(n, v)$ to a quorum of acceptors, where $v$ is the value $v_{\mathrm{prev}}$ paired with the highest reported $n_{\mathrm{prev}}$, or the proposer's own value if every promise returned $\bot$.
+\State \textbf{Phase 2b -- Accepted:} On receiving $\texttt{accept}(n,v)$: acceptor accepts unless it has already promised a proposal number greater than $n$. If a quorum accepts $(n,v)$, the value $v$ is \emph{chosen}.
+\State \textbf{Phase 3 -- Learn:} Each acceptor that accepts $(n,v)$ notifies the learners directly, or (more commonly) notifies a single distinguished acceptor which forwards the result to all learners once it detects a quorum has accepted. A learner outputs $v$ once it has confirmation that a quorum accepted $(n,v)$ for some $n$.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Safety of Paxos}\label{subsec:paxos-safety}
+
+\begin{smjtheorem}[Safety]\label{thm:paxos-safety}
+If value $v$ is chosen with proposal number $n$, then every subsequently chosen value also equals $v$.
+\end{smjtheorem}
+
+\begin{proof}
+We proceed by strong induction on the globally unique proposal numbers. Suppose $v$ was chosen with proposal number $n$, meaning a quorum $Q_1$ accepted $(n,v)$. We show that every proposal $(n',v')$ with $n'>n$ must satisfy $v'=v$.
+
+\medskip
+\textbf{Base case} ($n'=n+1$, when such a proposal number is used). The proposer of $n'$ collected promises from some quorum $Q_2$. By \Cref{lem:quorum}, $Q_1\cap Q_2\neq\emptyset$; let $a\in Q_1\cap Q_2$ be a shared acceptor. Since $a\in Q_1$, acceptor $a$ previously accepted $(n,v)$, so it reports $(n_{\mathrm{prev}},v_{\mathrm{prev}})=(n,v)$ to the proposer of $n'$ in Phase~1b. Moreover, an acceptor can accept a proposal numbered $k$ only after it has responded to a prepare for $k$, thereby making a promise for at least $k$. Hence an acceptor that has promised $n'$ cannot previously have accepted a proposal numbered at least $n'$. Therefore every accepted proposal reported by members of $Q_2$ has number less than $n'$. Because there is no proposal number strictly between $n$ and $n'=n+1$, the highest proposal number reported across the promises in $Q_2$ is at most $n$. Thus the highest reported accepted proposal is $(n,v)$, and the proposer sets $v'=v$.
+
+\medskip
+\textbf{Inductive step} ($n'>n+1$). Assume as the strong inductive hypothesis that every proposal $(k,w)$ with $n<k<n'$ carries value $w=v$. The proposer of $n'$ collected promises from some quorum $Q_2$. Again choose $a\in Q_1\cap Q_2$. Since $a$ accepted $(n,v)$, at least one promise in $Q_2$ reports an accepted proposal with number at least $n$. Let $k$ be the highest proposal number reported across all promises in $Q_2$. By the promise argument above, $k<n'$.
+
+If $k=n$, then the corresponding value is $v$. If $k>n$, then $k<n'$ and by the strong inductive hypothesis every proposal with number between $n$ and $n'$ carries value $v$. Hence in either case the value paired with the highest reported $k$ is $v$, and the proposer sets $v'=v$.
+
+\medskip
+In both cases $v'=v$, completing the induction.
+\end{proof}
+\begin{smjremark}
+Paxos does \emph{not} guarantee liveness in the worst case: two competing proposers can continuously pre-empt each other. Practical deployments use a distinguished leader proposer to avoid this. This does not reintroduce a permanent single point of failure in the way a non-replicated coordinator would: if the leader itself crashes, the system detects this (typically via timeouts) and elects a new one, so the leader's failure causes a temporary liveness hiccup---a pause in progress---rather than a lasting outage, and safety is preserved throughout by \Cref{thm:paxos-safety} regardless of how many leaders come and go.
+\end{smjremark}
+
+\subsection{Real-World Deployments}
+
+Paxos and its derivatives are the backbone of modern distributed infrastructure:
+
+\begin{itemize}[nosep]
+    \item \textbf{Google Chubby}~\cite{burrows2006} uses Paxos-derived protocols for distributed locking, and \textbf{Google Spanner}~\cite{corbett2012} uses them for globally consistent transactions.
+    \item \textbf{Apache ZooKeeper}~\cite{hunt2010} implements ZAB (ZooKeeper Atomic Broadcast), a Paxos variant, and underpins Kafka, Hadoop, and HBase.
+    \item \textbf{etcd}, a widely deployed distributed key-value store, uses the Raft protocol~\cite{ongaro2014}---a more understandable re-presentation of Paxos---to power the configuration management layer of large-scale cloud infrastructure.
+    \item \textbf{Apache Cassandra}~\cite{lakshman2010} uses a lightweight Paxos variant for linearisable writes.
+\end{itemize}
+
+Every time you send a message, make a payment, or deploy software in a cloud environment, you are relying on a system whose correctness ultimately rests on the safety proof of \Cref{thm:paxos-safety}.
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 6  --  FUTURE WORK
+% ══════════════════════════════════════════════════════════

@@ -1,0 +1,47 @@
+% ============================================================
+%  front/input/editorial.tex — Masthead / Editorial Board
+% ============================================================
+%
+%  This file displays the journal's editorial leadership on the
+%  front matter. It is typeset as a simple left-aligned tabular
+%  and sits inside a fixed container on the page.
+%
+%  ── STRUCTURE ──────────────────────────────────────────────
+%
+%      The tabular below lists:
+%      • Editor-in-Chief
+%      • Managing Editor 
+%      • Faculty Advisors
+%
+%      Each entry pairs a role with a name and graduation year.
+%      Years are typeset in smjgray for visual hierarchy.
+%
+%  ── CUSTOMIZATION ──────────────────────────────────────────
+%
+%      1. To add or remove people, edit rows in the tabular.
+%         Format: \textbf{Role}\\
+%                 Name\,---\,{\color{smjgray}YEAR}\\[0.3cm]
+%
+%      2. Years (e.g. MATH'25, CS'27) use \color{smjgray}.
+%         Adjust \color{...} if you want a different tone.
+%
+%      3. The [0.3cm] spacing after each entry controls vertical
+%         gap. Reduce for tighter layout, increase for breathing
+%         room.
+%
+%      4. Do NOT edit f1-cover.tex or the wrapper. Only modify
+%         this file.
+%
+% ============================================================
+
+\begin{tabular}{@{}l@{}}
+  \textbf{Editor-in-Chief}\\
+  Omar Elshinawy\,---\,{\color{smjgray}MATH'25}\\[0.3cm]
+  \textbf{Managing Editor}\\
+  Ahmed Maghri\,---\,{\color{smjgray}CS'27}\\[0.3cm]
+  \textbf{Faculty Advisors}\\
+  Prof. Dr. Sören Petrat\\
+  Prof. Dr. Keivan Mallahi-Karai\\
+  Dr. Ivan Ovsyannikov\\
+  Prof. Dr. Nikolai Leopold
+\end{tabular}

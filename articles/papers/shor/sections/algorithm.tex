@@ -1,0 +1,434 @@
+% ============================================================
+%  SECTION 4 — Shor's Algorithm
+% ============================================================
+\section{Shor's Algorithm: A Step-by-Step Walkthrough}
+
+Let's first state clearly the goal of the algorithm:
+\textbf{Given a semiprime number $N$, find the two prime numbers $P_1$ and
+$P_2$ such that: $P_1 \times P_2 = N$.}
+
+The classical way to find these numbers is just by guessing randomly, also
+known as the brute force method. The essence or the main idea of Shor's
+algorithm is to translate the problem of integer factorization, into a problem
+of period finding, and to show that given a random guess $g$, this bad guess
+can be systematically transformed into a better one.
+
+\subsection{Initialization}
+
+We start by guessing randomly a number $g$ such that $1 < g < N$. This leads
+to two cases:
+
+\textbf{Case 1:} We got lucky. $g$ is a factor of $N$, or shares common
+factors with $N$. In this case, we are done thanks to Euclid's algorithm.
+
+\begin{smjdefinition}
+\textbf{Euclid's Algorithm} is a classical method for efficiently computing
+the \textbf{greatest common divisor ($GCD$)} of two integers. It works by
+repeatedly replacing the larger number with its remainder when divided by the
+smaller, until the remainder is zero. The last non-zero remainder is the $GCD$.
+\end{smjdefinition}
+
+\begin{smjnote}
+Using that, to find a factor of $N$, we don't need then to guess a factor,
+just to find a number that shares factors with $N$.
+\end{smjnote}
+
+After finding one of the prime numbers, let's assume $P_1$, compute $N/P_1$
+and this will give you $P_2$.
+
+\textbf{Case 2:} Most probably, we won't get lucky.
+And this will make us start our process of making our bad guess a better one.
+To achieve that, we will borrow a quite helpful theorem.
+
+\begin{smjtheorem}
+For any two whole numbers $A$ and $B$ that are coprime, there exists a power
+$r$ and a multiple $m$ such that:
+$$A^r = m \cdot B + 1$$
+Equivalently:
+$$A^r \equiv 1\pmod B$$
+\end{smjtheorem}
+
+A good example to visualize it will be $A = 2$ and $P = 5$, we find that
+$r = 4$:
+$$
+2^1 \equiv 2 \pmod{5} \qquad
+2^2 \equiv 4 \pmod{5} \qquad
+2^3 \equiv 3 \pmod{5} \qquad
+2^4 \equiv 1 \pmod{5}
+$$
+
+In our case, our $A$ is our bad guess $g$, and $B$ is our semiprime number
+$N$ that we want to factor, and ultimately, we know the existence of our $r$.
+
+\subsection{Making the Bad Guess a Better Guess}
+
+Let's assume that we found $r$, such that $g^r \equiv 1 \pmod{N}$. Bring $1$
+to the left and you get:
+$$
+g^r - 1 \equiv 0\pmod{N}
+$$
+
+And using our famous identity: $(a + b)(a - b) = a^2 - b^2$:
+
+Replace $a$ by $g$, and $b$ by $1$, and going from the right side of the
+equality to the left, we get:
+$$
+\underbrace{(g^{r/2} - 1)}_{\text{$P_1'$}} \cdot
+\underbrace{(g^{r/2} + 1)}_{\text{$P_2'$}} \equiv 0\pmod{N}
+$$
+
+Notice that $r$ has to be even, otherwise, $r/2$ won't be a whole number. If
+we found an $r$ odd, we repeat our algorithm from the beginning.
+
+What we found now is actually really close to what we want, instead of finding
+the two numbers $P_1$ and $P_2$ such that $P_1 \times P_2 = N$, we found that
+$N$ divides the product of two other numbers $P_1'$ and $P_2'$. Which can be
+written as:
+$$
+P_1' \times P_2' = mN \quad , m \in \mathbb{N}
+$$
+
+Even more precisely, we found two numbers $P_1'$ and $P_2'$ that share factors
+with $N$. Thus:
+$$
+\gcd(P_1', N) = P_1 \text{ or } P_2.
+\text{ (We can replace } P_1' \text{ by } P_2', \text{ the outcome stays the same).}
+$$
+And remember that thanks to our beautiful Euclid's algorithm, we are able to
+compute $\gcd(P_1', N) = P_1$ easily. Compute then $\dfrac{N}{P_1} = P_2$,
+(and vice versa if we got that $\gcd(P_1', N) = P_2$). And we have
+successfully found our $P_1$ and $P_2$.
+
+\textit{End of our algorithm.}
+
+Or maybe not?
+
+You may feel that this is too easy, in the sense where, using this algorithm
+we could directly break the RSA, why are we using it? Remember also that I
+gave you an introduction about quantum computing, but I didn't talk at all
+about it at any point.
+
+Let's recall the algorithm's main steps.
+
+\begin{tcolorbox}[colframe=smjcrimson, colback=smjlightcrimson,
+                  sharp corners, boxrule=0.5pt, breakable]
+1 -- Make a guess, $g < N$ that shares no factors with $N$.\\[0.5em]
+2 -- Find $r$ such that $g^r = mN + 1$.\\[0.5em]
+3 -- If $r$ is even, calculate $(g^{r/2} + 1)$ and $(g^{r/2} - 1)$.
+     If $r$ is odd, go back to step 1.\\[0.5em]
+4 -- Use Euclid's algorithm to find the greatest common divisor.
+\end{tcolorbox}
+
+Where is the \textbf{quantum} here?
+
+\subsection{The Quantum Subroutine of Shor's Algorithm}
+
+Notice that we didn't discuss before how we are finding $r$, which is in fact
+the hardest (probably due to the quantum concepts) part of the whole algorithm.
+
+\begin{smjnote}
+Through this part, the quantum part of the explanation (which is still the
+main thing) is going to be a bit simplified, essentially when we come to some
+deep notions such as Quantum Fourier Transform, etc. Such quantum concepts as
+said before need even their own whole article. And as again mentioned before,
+one of the primary goals of the article is to keep the reader on board.
+There will be some analogies to the classical architecture of a computer, for
+the sake of your understanding.
+\end{smjnote}
+
+\subsubsection{Initialization}
+
+To achieve this quantum subroutine, we will need two quantum registers, as
+normal registers that we have in normal computers, these ones are just going
+to contain qubits instead of normal bits.
+
+First register: is going to be $2n$ qubits, initialized as:
+\[
+\ket{0}^{\otimes 2n}
+\]
+The number $n$ just determines how accurate we want our calculations to be,
+however, the 2nd register size depends on the first one.
+
+Second register is going to be $n$ qubits, initialized to: $\ket{1}$
+
+Note that $\otimes$ in context of quantum computing doesn't mean the XOR gate
+as a lot of people would think. It is a tensor product. Just consider it as a
+normal multiplication but between the quantum states.
+
+Note also that for the first register, we mean that all the bits are set to
+$0$, meaning that the state of that register is: $\ket{000\ldots000}$.
+
+But for the second register, we mean that the value of that register is one,
+meaning that the state of that register is: $\ket{000\ldots001}$. It is just
+a story of notations.
+
+\subsubsection{Hadamard Transform}
+
+Let's first define how the Hadamard Transform works. The Hadamard gate is
+formally defined as this:
+$$
+H = \frac{1}{\sqrt{2}}
+\begin{bmatrix}
+1 & 1 \\
+1 & -1
+\end{bmatrix}
+$$
+
+What does it do? Applying the Hadamard Transform to a $\ket{1}$ or $\ket{0}$
+gives this:
+\begin{align*}
+H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\\
+H\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})
+\end{align*}
+
+During this part, we will be interested essentially in its application on the
+$0$ state, since our first register is just full of $0$'s.
+
+Notice that on $0$, it created exactly a state such that the probability of
+getting one of the states $x$ such that $x \in \{0, \ldots, 2^n - 1\}$
+(converting the decimal to binary) is exactly equal.
+
+Let's try to apply it to $0$ states with $2$ qubits.
+$$
+H^{\otimes 2} \ket{00} = \frac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
+$$
+
+And on $3$ qubits?
+$$
+H^{\otimes 3} \ket{000} = \frac{1}{\sqrt{8}} (\ket{000} + \ket{001} + \ket{010}
++ \ket{011} + \ket{100} + \ket{101} + \ket{110} + \ket{111})
+$$
+Did you notice the pattern? If not let me show it to you:
+
+Whenever we apply the $H$ gate to a register of size $n$, such that all its
+qubits are $0$, we get a state such that the probability of measuring a state
+in $\{0, 1, 2, \ldots, 2^n - 1\}$ is exactly equal for all of them.
+
+You may wonder now why we are doing that, we will see why soon.
+
+To end this part, we will formally say that the state of our first register
+now is:
+$$
+\frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n - 1} \ket{x}
+$$
+
+\subsubsection{$U$}
+
+We will apply another transformation to the full two-register system. Let's
+call this transformation $U$. Formally, $U$ acts on a pair of states
+$\ket{x} \otimes \ket{y}$ as follows:
+$$
+U(\ket{x} \otimes \ket{y}) = \ket{x} \otimes \ket{y \cdot g^x \bmod N}
+$$
+With $g$ the random guess that we picked before. In other words, $U$ reads the
+value $x$ from the first register and uses it to update the second register:
+it multiplies the second register's value by $g^x$, modulo $N$.
+
+How are we going to use $U$? First let's look at our state now.
+
+The quantum state of our full system (including the $1^\text{st}$ and the
+$2^\text{nd}$ register) is the tensor product $\otimes$ of both first and
+second register. As I said $\otimes$ is just a normal multiplication of the
+states. Our first register is now a sum of equal states, and our second
+register is still just in a $1$ state. ``Expanding'' the expression:
+
+\[
+\left( \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n - 1} \ket{x} \right) \otimes \ket{1}
+\]
+
+gives:
+
+\[
+\frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n - 1} \left( \ket{x} \otimes \ket{1} \right)
+\]
+
+Don't overthink about it, it is the exact same way as you would expand
+$(a + b + c)d = ad + bd + cd$.
+For each $x$ (the values in each state from $0$ to $2^n - 1$), we apply the
+transformation $x$ times on the qubit at state $1$ associated to it. It is a
+bit hard to understand it like that, we can use a visualization to understand
+it more:
+
+For each pair $\ket{x} \otimes \ket{1}$, we apply $U$ getting:
+$$
+\ket{x} \otimes \ket{1} \longrightarrow \ket{x} \otimes U^x \ket{1}
+= \ket{x} \otimes \ket{g^x \bmod N}
+$$
+
+As an example, applying $U$ to a state $\ket{101} \otimes \ket{1}$
+($101$ read as $4 + 0 + 1 = 5$) gives:
+$$
+\ket{101} \otimes U^5 \ket{1} = \ket{101} \otimes \ket{g^5 \bmod N}
+$$
+And again, $g$ is our random guess that we picked before.
+
+\begin{smjnote}
+$\ket{x}\otimes\ket{y}$ is the same as $\ket{x}\ket{y}$
+\end{smjnote}
+
+Notice that when applying the transformation, we will get a certain periodicity
+in our quantum system due to modulo properties. To visualize it even better,
+let us consider that our $x$ is going from $0$ to $7$ (using thus $3$ qubits),
+that our $N$ was $26$, and our random guess was $3$, after applying everything
+we had before, we will get:
+$$
+\frac{1}{\sqrt{8}} (\ket{000} \ket{3^0 \bmod 26} + \ket{001} \ket{3^1 \bmod 26}
++ \ket{010} \ket{3^2 \bmod 26} +
+$$
+$$
+\ket{011} \ket{3^3 \bmod 26} + \ket{100} \ket{3^4 \bmod 26}
++ \ket{101} \ket{3^5 \bmod 26} +
+$$
+$$
+\ket{110} \ket{3^6 \bmod 26} + \ket{111} \ket{3^7 \bmod 26})
+$$
+
+Which exactly gives:
+$$
+\frac{1}{\sqrt{8}} (\ket{000} \ket{1 \bmod 26} + \ket{001} \ket{3 \bmod 26}
++ \ket{010} \ket{9 \bmod 26} +
+$$
+$$
+\ket{011} \ket{1 \bmod 26} + \ket{100} \ket{3 \bmod 26}
++ \ket{101} \ket{9 \bmod 26} +
+$$
+$$
+\ket{110} \ket{1 \bmod 26} + \ket{111} \ket{3 \bmod 26})
+$$
+
+Notice also that the period is $3$, which is exactly the number $r$ that we
+are searching for, $3^3 \equiv 1 \pmod{26}$.
+
+Thus, if we are able to extract the periodicity from the state, we would be
+done.
+
+\subsubsection{The Periodicity, a.k.a.\ $r$}
+
+This is actually a much harder task than expected. When you see the
+representation of the state in front of you it seems obvious, however, as we
+said before, if we just measure now our state it is just going to give us a
+random state since they all have equal probability. Which is not what we want.
+In fact, we are not able to extract the periodicity. However, we have something
+called the QFT (for \textbf{Q}uantum \textbf{F}ourier \textbf{T}ransform).
+
+The QFT is the quantum analogue of the classical Discrete Fourier Transform
+(DFT), which is a well-known tool in signal processing for decomposing a
+signal into its frequency components. The DFT of a sequence
+$x_0, x_1, \ldots, x_{N-1}$ is defined as:
+$$
+X_k = \sum_{n=0}^{N-1} x_n \cdot e^{\frac{2\pi i k n}{N}}
+$$
+The QFT is defined as:
+$$
+\text{QFT} \ket{x} = \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1}
+e^{\frac{2\pi i x k}{N}} \ket{k}
+$$
+The analogy is clear: where the DFT maps a sequence of numbers to their
+frequency components, the QFT maps a quantum state $\ket{x}$ to a
+superposition of states $\ket{k}$, with amplitudes encoding the same
+exponential structure. Applied to our periodic quantum state, the QFT
+transforms the hidden period $r$ into measurable frequency information. The
+QFT doesn't extract $r$ directly --- it extracts the frequency $1/r$, from
+which we recover $r$ using the relation:
+$$
+\text{Period} = \frac{1}{\text{frequency}}
+$$
+A full treatment of the QFT would require its own article \cite{nielsen2010}.
+What matters for our purposes is the following: after applying the QFT, the
+amplitudes of our state are peaked near multiples of $j/r$, where $j$ is an
+integer. This means that when we measure, we will most probably obtain a value
+close to $j/r$, from which we can extract $r$ using the algorithm mentioned
+in the next section.
+
+\subsubsection{Continued Fraction Algorithm (CFA)}
+
+After obtaining $j/r$, extracting $r$ from it is not straightforward. If
+during your measurement, you measured that $j/r = 0.312$, extracting the
+period from that is still a question that we need to answer.
+
+For that, we use the \textbf{Continued Fraction Algorithm}. The best way to
+explain the CFA is to give an example.
+
+Let's assume that we found that $j/r = 0.312$.
+
+We start by writing it as a fraction:
+$$
+0 + \frac{312}{1000}
+$$
+
+We then reverse the fraction and get this:
+$$
+= 0 + \frac{1}{\frac{1000}{312}} = 0 + \frac{1}{3 + \frac{8}{39}}
+$$
+
+And we repeat the same process until we get a $1$ in the numerator.
+$$
+0.312 = 0 + \frac{1}{3 + \frac{1}{4 + \frac{1}{1 + \frac{1}{7}}}}
+$$
+
+For each fraction, we get a better approximation for $0.312$:
+$$
+0.312 \approx \frac{1}{3}, \quad j = 1, \quad r = 3 \qquad \qquad 0.312 \approx \frac{1}{3 + \frac{1}{4}} = \frac{4}{13}, \quad j = 4, \quad r = 13
+$$
+% $$
+% 0.312 \approx \frac{1}{3 + \frac{1}{4}} = \frac{4}{13}, \quad j = 4, \quad r = 13
+% $$
+$$
+0.312 \approx \frac{1}{3 + \frac{1}{4 + \frac{1}{1}}} = \frac{5}{16},
+\quad j = 5, \quad r = 16
+$$
+
+For a more detailed treatment of the algorithm and its post-quantum
+implications, see \cite{watkins}.
+
+We choose an approximation of $r$ such that it follows two conditions:
+
+\begin{tcolorbox}[colframe=smjcrimson, colback=smjlightcrimson,
+                  sharp corners, boxrule=0.5pt]
+\begin{itemize}
+  \item[1--] $r$ should be less than $N$
+  \item[2--] $r$ should be an even number.
+\end{itemize}
+\end{tcolorbox}
+
+If none of our approximations gives a valid $r$, we repeat the same process
+from the beginning.
+
+And with that, our quantum subroutine comes to an end. Let us take a step back
+and appreciate what just happened. We started with a seemingly impossible
+problem: factoring a large semiprime $N$. Rather than attacking it directly,
+Shor's algorithm translated it into a period-finding problem --- one that a
+quantum computer can solve efficiently. We made a random guess $g$, used the
+quantum subroutine to find its period $r$, and from that period extracted the
+prime factors of $N$ using nothing more than Euclid's algorithm and some
+modular arithmetic.
+
+Now that we have the full picture, we can revisit the main steps of the
+algorithm and fill in the missing piece:
+
+\begin{tcolorbox}[colframe=smjcrimson, colback=smjlightcrimson,
+                  sharp corners, boxrule=0.5pt, breakable]
+1 -- Make a guess, $g < N$ that shares no factors with $N$.\\[0.5em]
+2 -- Use the quantum subroutine to find $r$ such that
+     $g^r \equiv 1 \pmod{N}$:
+\begin{itemize}
+    \item Initialize two quantum registers: the first with $2n$ qubits in
+          state $\ket{0}^{\otimes 2n}$, the second with $n$ qubits in
+          state $\ket{1}$.
+    \item Apply the Hadamard transform to the first register, creating an
+          equal superposition of all states $\ket{x}$ for
+          $x \in \{0, \ldots, 2^n - 1\}$.
+    \item Apply $U$ to the full system:
+          $U(\ket{x} \otimes \ket{y}) = \ket{x} \otimes \ket{y \cdot g^x \bmod N}$.
+    \item Apply the QFT to the first register to extract frequency information.
+    \item Measure the first register to obtain $j/r$, then apply the CFA
+          to extract $r$.
+\end{itemize}
+\vspace{0.5em}
+3 -- If $r$ is even, calculate $(g^{r/2} + 1)$ and $(g^{r/2} - 1)$.
+     If $r$ is odd, go back to step 1.\\[0.5em]
+4 -- Use Euclid's algorithm to find the greatest common divisor.
+\end{tcolorbox}
+
+This is the full picture of Shor's algorithm. But a natural question remains:
+if this algorithm can break RSA, why is our data still safe today?

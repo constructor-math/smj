@@ -1,0 +1,58 @@
+\section{Preliminaries}\label{sec:prelim}
+
+This paper assumes familiarity with basic set theory, mathematical induction, and proof by contradiction. We also assume elementary graph-theory vocabulary (vertices, edges, paths, connectivity), at the level covered in a first discrete mathematics course. No prior knowledge of distributed systems or computer networking is required.
+
+\subsection{Distributed Networks as Graphs}\label{subsec:network-graph}
+
+\begin{smjdefinition}[Distributed Network]\label{def:network-graph}
+A \emph{distributed system} is modelled as a directed graph $G = (V, E)$ where $V$ is a finite set of \emph{nodes} (processes, computers, phones) and $E \subseteq V \times V$ is a set of directed communication links, with no self-loops. The graph is called \emph{undirected} when $E$ is symmetric, i.e. $(u,v)\in E$ if and only if $(v,u)\in E$.
+\end{smjdefinition}
+
+Three topologies recur throughout this paper: a \textbf{ring} (a connected graph in which each node has exactly two neighbours), a \textbf{tree} (connected and acyclic, $n-1$ edges), and an \textbf{arbitrary connected graph} (the structure of the Internet itself).
+
+\begin{smjdefinition}[Degree, Connectivity, Diameter]
+For an undirected graph, the \emph{degree} of node $v$ is $\deg(v) = |\{u : (v,u)\in E\}|$. A graph is \emph{connected} if every pair of nodes is joined by a path. The \emph{diameter} of $G$ is the maximum shortest-path distance over all pairs.
+\end{smjdefinition}
+
+\subsection{Transition Systems}\label{subsec:transition}
+
+\begin{smjdefinition}[Transition System]\label{def:transition-system}
+A \emph{transition system} is a triple $(C, \rightarrow, I)$ where $C$ is a set of \emph{configurations} (global states), ${\rightarrow}\;\subseteq C\times C$ is a \emph{transition relation}, and $I\subseteq C$ is a set of \emph{initial configurations}. An \emph{execution} is a sequence $\gamma_0,\gamma_1,\ldots$ where $\gamma_0\in I$ and $\gamma_i\rightarrow\gamma_{i+1}$ for all $i$.
+\end{smjdefinition}
+
+\begin{smjdefinition}[Safety and Liveness]
+A \emph{safety} property asserts that ``something bad never happens.'' A \emph{liveness} property asserts that ``something good eventually happens.'' Correctness of a distributed algorithm requires proving both.
+\end{smjdefinition}
+
+\subsection{Synchrony Models}\label{subsec:synchrony}
+
+The behaviour of a distributed algorithm depends critically on what assumptions we make about message delays. We distinguish three models:
+
+\begin{smjdefinition}[Synchronous Model]
+A distributed system is \emph{synchronous} if there exist known upper bounds $\Delta$ on message delivery time and $\Phi$ on relative process speeds (or, equivalently for this discussion, on the time required for a process to take a step). Every message sent is guaranteed to arrive within $\Delta$ time units, and a process that is silent for sufficiently long can therefore be distinguished from one that is merely slow.
+\end{smjdefinition}
+
+\begin{smjdefinition}[Asynchronous Model]
+A distributed system is \emph{asynchronous} if there is no bound on message delivery time or relative process speed. Communication channels are reliable (messages are not lost), but delivery order is arbitrary and messages may be delayed by arbitrarily large finite amounts in an admissible execution. Crucially, a node cannot distinguish a slow process from a crashed one.
+\end{smjdefinition}
+
+\begin{smjdefinition}[Partially Synchronous Model]
+A system is \emph{partially synchronous} if there are bounds on message delay and relative process speed, but these bounds are either unknown in advance or are guaranteed only after some unknown global stabilisation time. This model lies between synchrony and asynchrony and is the timing assumption used by many practical consensus protocols~\cite{dworkls1988}.
+\end{smjdefinition}
+
+The asynchronous model makes the fewest timing assumptions: it gives the adversarial scheduler the most freedom. An algorithm that is correct under asynchrony is therefore also correct under stronger timing assumptions. This is why proving impossibility in the asynchronous model gives a particularly robust barrier; the FLP theorem is proved there precisely to maximise its generality.
+
+\subsection{Logical Time}\label{subsec:logical-time}
+
+In a distributed system every node has its own clock, and physical clocks drift. Lamport~\cite{lamport1978} proposed assigning a \emph{logical timestamp} $C(e)\in\N$ to every event $e$ via a simple counter rule: increment on every local event or send; on receive, take the maximum of local and incoming counter, then increment. The key property is:
+
+\begin{smjproposition}[Clock Condition~\cite{lamport1978}]\label{thm:lamport-clock}
+If event $a$ causally precedes event $b$, then $C(a)<C(b)$.
+\end{smjproposition}
+
+Vector clocks strengthen this property to a biconditional with respect to the happened-before relation: for events $a$ and $b$, $a$ happened before $b$ if and only if the vector timestamp of $a$ is componentwise no greater than that of $b$ and strictly smaller in at least one component. This enables systems to detect concurrent events and writes. Proofs can be found in~\cite{lamport1978,fidge1988}.
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 1  --  MOTIVATION
+% ══════════════════════════════════════════════════════════

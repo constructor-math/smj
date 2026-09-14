@@ -1,0 +1,24 @@
+\section{Introducing the Golf Ball System $(q_1,q_2,q_3)$}
+
+This article serves as a semi-gentle introduction into the world of Lagrangian Mechanics through an approachable everday example: mini-golf. The goal of this discussion is to demonstrate how Lagrangian methods can be applied in a holistic and exploratory manner to examine otherwise complicated generalized systems. A \textbf{system} in the context of analytical mechanics refers to a collection of time-dependent generalized coordinates $(q_1(t), q_2(t), \ldots, q_n(t))$, with time derivatives $\dot q_i(t)=\frac{dq}{dt}$ $i=1,2,\ldots,n$---which serve as a generalized velocity. Using these generalized coordinates, we further define a system's kinetic energy, $T(q_1, q_2,\ldots, q_n,\dot q_1, \dot q_2, \ldots, \dot q_n)$ and potential energy, $V(q_1, q_2, \ldots, q_n)$ as two inextricable features of the system. This means that for a system with $n$ generalized coordinates, it exhibits $n$ degrees of freedom ($n$ spatial components $q_i,\quad i=1,\ldots,n$). 
+
+
+The particular class of system that will be discussed during this article are holonomically constrained systems. This means that rather than simply taking the system as is, we demand a certain relationship between the generalized coordinates to always hold. 
+
+
+\begin{smjdefinition}[Holonomic Constraint]{defn:holonomicconstraint}
+		A holonomic constraint on a mechanical system with $n$ degrees of freedom
+		$(q_1, q_2, \ldots, q_n)$ and time $t$ is imposed upon only the spatial
+		coordinates (and sometimes time) by the equation
+		$f(q_1, q_2, \ldots, q_d,t)=0$.
+\end{smjdefinition}
+
+Holonomically constrained systems present themselves frequently in the study of mechanics, particularly when objects are subject to spatial constraints, such as sticking to a specific surface, or only moving along one axis or path. For the purposes of this investigation, a very particular class of holonomic constrained systems will be examined--a golf ball with position $(q_1,q_2,q_3)\in\mathbb{R}^3$ in 3 dimensions moving along some smooth surface $h(q_1,q_2)$ under uniform gravity $g$. Such a system provides invaluable parallels between important subareas of physics, such as mechanics, general relativity, and even planetary motion. In this particular situation, we shall consider the holonomic constraint which binds the golf ball to the surface of the golf course. We do this by restricting the vertical spatial component, and forcing our system to satisfy for a given golf course $h(q_1,q_2)$:
+
+\begin{equation}
+	h(q_1,q_2)=q_3 \implies \underbrace{h(q_1,q_2)-q_3}_{f(q_1,q_2,q_3)} = 0
+	\label{holconstraint}
+\end{equation}
+
+Equation \ref{holconstraint} is precisely the holonomic constraint we will consider. Note that it is equivalent to saying that the golf ball will permanently remain stuck to the surface of the golf course throughout the course of its trajectory. With the idea of a mechanical system and constraints defined, it is crucial now to define the framework on which we can figure out the dynamics of the system. As is, we have no idea how these generalized coordinates of the golf ball behave, so we should introduce the core concepts of the Lagrangian mechanics toolbox to approach this problem.
+

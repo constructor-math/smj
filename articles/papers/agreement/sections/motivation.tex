@@ -1,0 +1,20 @@
+\section{Motivation: Why Agreement Is Hard}\label{sec:motivation}
+
+Everyone has been in a group chat where messages appear out of order, where a reply appears before the message it answers, or where three people start planning three different things simultaneously because nobody knows who is in charge. That everyday chaos is not merely annoying. In distributed systems, this kind of uncertainty can make agreement impossible under the wrong timing assumptions.
+
+Every digital system we rely on confronts this problem at scale. WhatsApp routes messages among billions of phones with no single server seeing every conversation. Netflix serves video from thousands of globally distributed caches that must agree on content availability. Google's search index is partitioned across hundreds of thousands of machines that coordinate results in milliseconds. In none of these systems is there a single omniscient boss.\\[-0.8cm]
+\begin{smjexample}[The Restaurant Problem]\label{ex:restaurant}
+Five friends choose a restaurant via group chat. Each proposes one option. They must all commit to \emph{exactly} one choice. Now imagine one friend's phone dies mid-conversation. The remaining four must still agree, without knowing whether the fifth will come back online. Do they wait? Do they decide without her? Can they even tell the difference between ``she has not replied yet'' and ``her phone is dead''?\\[-0.8cm]
+\end{smjexample}
+This example captures the three core difficulties that make distributed agreement hard:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{No shared clock.} Nodes cannot tell the global order of events.
+    \item \textbf{No shared memory.} Coordination requires messages, which take time to arrive and, in the model we use throughout this paper, may be arbitrarily but finitely delayed.
+    \item \textbf{Failures are indistinguishable from slowness.} A node that has crashed looks identical to one that is merely slow. An asynchronous system, one with no bound on message delays, cannot tell the difference.
+\end{enumerate}
+Point (iii) is the crux. It is the observation that drives the central impossibility result of this paper.
+
+
+% ══════════════════════════════════════════════════════════
+% SECTION 2  --  LITERATURE AND PROBLEM STATEMENT
+% ══════════════════════════════════════════════════════════

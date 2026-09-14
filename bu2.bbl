@@ -1,0 +1,71 @@
+\begin{thebibliography}{10}
+
+\bibitem{Arikan2009}
+Erdal Ar{\i}kan.
+\newblock Channel polarization: A method for constructing capacity-achieving
+  codes for symmetric binary-input memoryless channels.
+\newblock {\em IEEE Transactions on Information Theory}, 55(7):3051--3073,
+  2009.
+
+\bibitem{Biswas}
+Siddhartha Biswas.
+\newblock Introduction to coding theory: Basic codes and shannon's theorem,
+  2011.
+\newblock Undergraduate research paper from UChicago.
+
+\bibitem{Elias1954}
+Peter Elias.
+\newblock Error-free coding.
+\newblock In {\em IRE Transactions on Information Theory}, volume~4, pages
+  29--37, 1954.
+
+\bibitem{Elshinawy2025}
+Omar Elshinawy.
+\newblock Syllabus \& agenda: Mathematical undergraduate seminar, Spring 2025.
+
+\bibitem{Goemans2015}
+Michel Goemans.
+\newblock Shannon's noisy coding theorem.
+\newblock Technical report, MIT, May 2015.
+
+\bibitem{GuruswamiRudra2006L2}
+Venkatesan Guruswami and Dan Halperin.
+\newblock More on linear codes.
+\newblock Technical Report Lecture 2, Carnegie Mellon University, Department of
+  Computer Science, October 2006.
+
+\bibitem{GuruswamiMachmouchi2006L3}
+Venkatesan Guruswami and Widad Machmouchi.
+\newblock Shannon's theorem.
+\newblock Technical Report Lecture 3, Carnegie Mellon University, Department of
+  Computer Science, October 2006.
+
+\bibitem{GuruswamiRastogi2006L1}
+Venkatesan Guruswami and Vibhor Rastogi.
+\newblock Error correcting codes.
+\newblock Technical Report Lecture 1, Carnegie Mellon University, Department of
+  Computer Science, October 2006.
+
+\bibitem{GuruswamiRudra2006L4}
+Venkatesan Guruswami and Atri Rudra.
+\newblock Proof of shannon's theorem and an explicit code.
+\newblock Technical Report Lecture 4, Carnegie Mellon University, Department of
+  Computer Science, October 2006.
+
+\bibitem{Shannon1948}
+Claude~E. Shannon.
+\newblock A mathematical theory of communication.
+\newblock {\em Bell System Technical Journal}, 27(3--4):379--423, 623--656,
+  1948.
+
+\bibitem{SlotZur2015}
+Lucas Slot and Sebastian Zur.
+\newblock Shannon's noisy-channel coding theorem.
+\newblock Technical report, Vrije Universiteit Amsterdam, February 2015.
+
+\bibitem{SudanSuzgun2019}
+Madhu Sudan and Mirac Suzgun.
+\newblock A gentle introduction to polar codes.
+\newblock Technical Report Lecture 8, Harvard University, January 2019.
+
+\end{thebibliography}

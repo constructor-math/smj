@@ -1,0 +1,78 @@
+% ============================================================
+%  front/f1-cover.tex — Full-page cover with TikZ artwork
+% ============================================================
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+
+%% ── BACKGROUND ─────────────────────────────────────────────
+\fill[white] (current page.south west) rectangle (current page.north east);
+
+%% ── TOP MASTHEAD BAND (6 cm) ────────────────────────────────
+\fill[smjcrimson]
+  (current page.north west)
+  rectangle ([yshift=-6cm]current page.north east);
+
+% Gold accent rule at bottom of band
+\fill[smjgold]
+  ([yshift=-5.8cm]current page.north west)
+  rectangle ([yshift=-6.0cm]current page.north east);
+
+% Journal title (stacked)
+\node[white, font=\fontsize{26}{30}\selectfont\bfseries, anchor=center]
+  at ([yshift=-2.0cm]current page.north)
+  {THE STUDENT};
+\node[smjgold, font=\fontsize{26}{30}\selectfont\bfseries, anchor=center]
+  at ([yshift=-3.4cm]current page.north)
+  {MATHEMATICAL JOURNAL};
+
+% Volume / date line
+\node[white, font=\fontsize{14}{18}\selectfont\bfseries, anchor=center]
+  at ([yshift=-4.8cm]current page.north)
+  {\smjvolume};
+
+%% ── ARTWORK: ONE FIXED CANVAS ───────────────────────────────
+%  Canvas origin (0,0) at current page.north + (0, -11cm).
+%  Canvas extends 21cm wide × 10cm tall, i.e.
+%      x ∈ [-10.5, 10.5],  y ∈ [-5, 5]   (in cm)
+%  Everything inside front/input/artwork.tex draws in that frame.
+\begin{scope}[shift={([yshift=-11cm]current page.north)}, x=1cm, y=1cm]
+  \input{front/input/artwork.tex}
+\end{scope}
+
+%% ── IN THIS ISSUE (below artwork) ───────────────────────────
+\node[anchor=north, inner sep=0pt]
+  at ([yshift=-16cm]current page.north) {%
+    \begin{minipage}{18cm}\centering
+      {\huge\bfseries\color{smjcrimson}IN THIS ISSUE}\\[0.2cm]
+      \textcolor{smjgold}{\rule{8cm}{2pt}}\\[0.5cm]
+      \smjcoverentries{article}
+    \end{minipage}
+  };
+
+%% ── BOTTOM BAND (3.7 cm) ────────────────────────────────────
+\fill[smjcrimson]
+  (current page.south west)
+  rectangle ([yshift=3.7cm]current page.south east);
+
+\fill[smjgold]
+  ([yshift=3.7cm]current page.south west)
+  rectangle ([yshift=3.9cm]current page.south east);
+
+\node[white, anchor=center]
+  at ([yshift=2.75cm]current page.south)
+  {A Student Publication of};
+
+\node[smjgold!85!white, font=\itshape, anchor=center]
+  at ([yshift=2.15cm]current page.south)
+  {The Constructor University Mathematical Society};
+
+\node[white, anchor=center]
+  at ([yshift=1.55cm]current page.south)
+  {\texttt{math.constructor.university}};
+
+\node[white, anchor=center]
+  at ([yshift=1.05cm]current page.south)
+  {\texttt{constructor-math.github.io}};
+
+\end{tikzpicture}
+\clearpage
