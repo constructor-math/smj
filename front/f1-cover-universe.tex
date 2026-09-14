@@ -1,0 +1,59 @@
+% ============================================================
+% Connected mathematical-universe cover, adapted from CMJ.
+% Selected in main.tex with \def\smjcoverchoice{universe}.
+% ============================================================
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay, line cap=round, line join=round]
+\fill[white] (current page.south west) rectangle (current page.north east);
+\fill[smjcrimson] (current page.north west) rectangle ([xshift=1.75cm]current page.south west);
+\fill[smjgold] ([xshift=1.75cm]current page.north west) rectangle ([xshift=1.93cm]current page.south west);
+
+% The masthead is deliberately the cover's dominant typographic element.
+\node[anchor=north west, text=smjcrimson, font=\fontsize{26}{29}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=2.65cm,yshift=-1.15cm]current page.north west) {THE STUDENT};
+\node[anchor=north west, text=smjcrimson, font=\fontsize{26}{29}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=2.65cm,yshift=-2.25cm]current page.north west) {MATHEMATICAL JOURNAL};
+\node[anchor=north west, text=smjdark, font=\fontsize{17}{20}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=2.65cm,yshift=-3.58cm]current page.north west) {@CONSTRUCTOR UNIVERSITY};
+\draw[smjgold, line width=1.15pt] ([xshift=2.65cm,yshift=-4.25cm]current page.north west) -- ([xshift=11.1cm,yshift=-4.25cm]current page.north west);
+\node[anchor=north west, text=smjgray, font=\fontsize{14.5}{17}\selectfont\bfseries, inner sep=0pt]
+  at ([xshift=2.65cm,yshift=-4.48cm]current page.north west) {\smjvolume};
+\node[text=smjgold, font=\fontsize{24}{25}\selectfont\bfseries, align=center, inner sep=0pt]
+  at ([xshift=.88cm,yshift=-2.4cm]current page.north west)
+  {\shortstack{S\\M\\J\\\char64\\C\\U}};
+
+% A single landscape joins discrete structure, analysis, geometry, and consensus.
+\begin{scope}[shift={([yshift=-10.55cm]current page.north)}, x=1cm, y=1cm]
+  \foreach \x/\y in {-7.35/1.62,-6.48/2.17,-5.63/1.5,-7.18/.54,-6.25/.75,-5.35/.56,-7.42/-.58,-6.5/-.92,-5.52/-.52,-6.18/-2.03}
+    \fill[smjcrimson!68] (\x,\y) circle (1.35pt);
+  \draw[smjcrimson!46, line width=.55pt] (-7.35,1.62)--(-6.48,2.17)--(-5.63,1.5)--(-6.25,.75)--(-7.35,1.62) (-7.18,.54)--(-6.25,.75)--(-5.35,.56)--(-5.52,-.52)--(-6.5,-.92)--(-7.42,-.58)--(-7.18,.54) (-6.25,.75)--(-6.5,-.92) (-5.63,1.5)--(-5.35,.56) (-6.5,-.92)--(-6.18,-2.03)--(-5.52,-.52);
+  \fill[smjgold] (-6.25,.75) circle (2.15pt); \fill[smjgold] (-5.52,-.52) circle (2.15pt);
+  \draw[smjcrimson!20, line width=6.3pt] (-7.25,.05) .. controls (-5.95,2.65) and (-4.72,-2.45) .. (-3.38,.05) .. controls (-2.18,2.58) and (-.93,2.22) .. (.08,.2) .. controls (1.12,-1.86) and (2.55,-2) .. (3.47,-.03) .. controls (4.55,2.35) and (6.12,2.12) .. (7.42,.3);
+  \draw[smjcrimson, line width=1.35pt] (-7.25,.05) .. controls (-5.95,2.65) and (-4.72,-2.45) .. (-3.38,.05) .. controls (-2.18,2.58) and (-.93,2.22) .. (.08,.2) .. controls (1.12,-1.86) and (2.55,-2) .. (3.47,-.03) .. controls (4.55,2.35) and (6.12,2.12) .. (7.42,.3);
+  \foreach \s/\op in {0/.52,.38/.34,-.38/.34} \draw[smjcrimson!78, opacity=\op, line width=.7pt] (-4.9,\s) .. controls (-4.45,1.35+\s) and (-3.95,1.35+\s) .. (-3.5,\s) .. controls (-3.05,-1.35+\s) and (-2.55,-1.35+\s) .. (-2.1,\s) .. controls (-1.65,1.35+\s) and (-1.15,1.35+\s) .. (-.7,\s);
+  \draw[smjgold, line width=1.35pt] (-4.88,.03) .. controls (-4.43,1.38) and (-3.93,1.38) .. (-3.48,.03) .. controls (-3.03,-1.32) and (-2.53,-1.32) .. (-2.08,.03);
+  \begin{scope}[shift={(1.38,-.08)}]\clip (-2.55,-2.3) rectangle (2.55,2.3);
+    \foreach \t in {-2.6,-2.1,...,2.6} {\draw[smjcrimson!40, line width=.48pt] plot[smooth] coordinates {(-2.7,\t) (-1.35,{\t+.42*sin(\t r)}) (0,{\t+.78*sin(\t r)}) (1.35,{\t+.42*sin(\t r)}) (2.7,\t)}; \draw[smjcrimson!38, line width=.48pt] plot[smooth] coordinates {(\t,-2.65) ({\t+.42*sin(\t r)},-1.35) ({\t+.78*sin(\t r)},0) ({\t+.42*sin(\t r)},1.35) (\t,2.65)};}\end{scope}
+  \draw[smjcrimson!70, line width=.9pt] (-1.12,-1.67) .. controls (-.32,-2.5) and (.68,-2.52) .. (1.48,-1.67) .. controls (2.28,-.81) and (3.2,-.81) .. (4,.03);
+  \draw[smjgold, line width=1.1pt] (-.97,1.56) .. controls (-.15,.69) and (.72,.67) .. (1.48,1.56) .. controls (2.35,2.53) and (3.2,2.36) .. (4.1,1.22);
+  \foreach \a in {12,84,156,228,300} \draw[smjcrimson!55, line width=.65pt] (6.53,.28) -- (\a:1.52);
+  \draw[smjcrimson!42, line width=.65pt] (12:1.52)--(156:1.52)--(300:1.52)--(84:1.52)--(228:1.52)--cycle;
+  \fill[smjcrimson] (6.53,.28) circle (4.4pt);
+  \foreach \a/\c in {12/smjgold,84/smjcrimson,156/smjgold,228/smjcrimson,300/smjgold} \fill[\c] (\a:1.52) circle (2.65pt);
+  \draw[smjgold, line width=1.15pt] (5.25,-1.22) .. controls (5.78,-.34) and (6.2,-.2) .. (6.53,.28) .. controls (6.96,.92) and (7.35,.94) .. (7.78,1.28);
+  \foreach \x/\y in {-3.38/.05,.08/.2,3.47/-.03} {\fill[white] (\x,\y) circle (3.1pt); \draw[smjcrimson, line width=.8pt] (\x,\y) circle (3.1pt);} \fill[smjgold] (.08,.2) circle (1.15pt);
+\end{scope}
+
+\draw[smjgold, line width=1.1pt] ([xshift=2.65cm,yshift=-16.1cm]current page.north west) -- ([xshift=-1.5cm,yshift=-16.1cm]current page.north east);
+\node[anchor=north west, text=smjcrimson, font=\fontsize{25}{30}\selectfont\bfseries, inner sep=0pt] at ([xshift=2.65cm,yshift=-16.55cm]current page.north west) {IN THIS ISSUE};
+\node[anchor=north west, inner sep=0pt] at ([xshift=2.65cm,yshift=-17.7cm]current page.north west) {\begin{minipage}{16.5cm}\smjcompactcoverentries{article}\end{minipage}};
+
+% Footer matches the classic cover exactly.
+\fill[smjcrimson] (current page.south west) rectangle ([yshift=3.7cm]current page.south east);
+\fill[smjgold] ([yshift=3.7cm]current page.south west) rectangle ([yshift=3.9cm]current page.south east);
+\node[white, anchor=center] at ([yshift=2.75cm]current page.south) {A Student Publication of};
+\node[smjgold!85!white, font=\itshape, anchor=center] at ([yshift=2.15cm]current page.south) {The Constructor University Mathematical Society};
+\node[white, anchor=center] at ([yshift=1.55cm]current page.south) {\texttt{math.constructor.university}};
+\node[white, anchor=center] at ([yshift=1.05cm]current page.south) {\texttt{constructor-math.github.io}};
+\end{tikzpicture}
+\clearpage

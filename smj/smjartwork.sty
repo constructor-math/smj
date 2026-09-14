@@ -112,6 +112,42 @@
   \end{tabular}%
 }
 
+% Compact cover grid for layouts that reserve less vertical space than the
+% standard cover.  It deliberately uses the same metadata/filtering path as
+% \smjcoverentries, so both cover designs always show the same articles.
+\newcommand{\smjcompactcoverentries}[1]{%
+  \smj@buildfilteredlist{#1}%
+  \def\smj@tabbody{}%
+  \smjloopcnt=0
+  \loop\ifnum\smjloopcnt<\smjfilteredcnt
+    \global\advance\smjloopcnt by 1
+    \expandafter\let\expandafter\smj@cur\csname smj@filtered@\the\smjloopcnt\endcsname
+    \ifnum\smjloopcnt=\smjfilteredcnt
+      \ifodd\smjloopcnt
+        \xappto\smj@tabbody{\noexpand\smjcompactcoverentry{\smj@cur}\noexpand\\[0.25cm]}%
+      \else
+        \xappto\smj@tabbody{\noexpand\smjcompactcoverentry{\smj@cur}\noexpand\\[0.25cm]}%
+      \fi
+    \else
+      \ifodd\smjloopcnt
+        \xappto\smj@tabbody{\noexpand\smjcompactcoverentry{\smj@cur}\noexpand&}%
+      \else
+        \xappto\smj@tabbody{\noexpand\smjcompactcoverentry{\smj@cur}\noexpand\\[0.25cm]}%
+      \fi
+    \fi
+  \repeat
+  \begin{tabular}{@{}p{7.9cm}p{7.9cm}@{}}\smj@tabbody\end{tabular}%
+}
+
+\newcommand{\smjcompactcoverentry}[1]{%
+  \begin{minipage}[t]{7.8cm}\raggedright
+    {\fontsize{15}{18}\selectfont\bfseries\color{smjdark}%
+      \smj@joinauthoryearaffil{\smj@get{#1}{author}}{\smj@get{#1}{year}}{}}\par
+    {\fontsize{17}{20.5}\selectfont\itshape\color{smjgray}%
+      \smj@get{#1}{cover-title}}\par
+  \end{minipage}%
+}
+
 % ?? ToC entry (single) ??????????????????????????????????
 \newcommand{\contentsentry}[3]{%
   \noindent

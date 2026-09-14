@@ -8,6 +8,11 @@
 
 \begin{document}
 
+% Cover choice: `classic` uses the original masthead layout; `universe`
+% uses the connected mathematical-universe cover imported from the CMJ work.
+% Change this one value to switch covers.
+\def\smjcoverchoice{universe}
+
 \smjvolume{
     Inaugural Edition%
     \quad\textbullet\quad%
@@ -18,7 +23,16 @@
 
 % ── Front Matter ────────────────────────────────────────────
 \pagenumbering{roman}
-\input{front/f1-cover}
+\ifx\smjcoverchoice\undefined
+  \input{front/f1-cover}
+\else
+  \def\smjclassiccover{classic}
+  \ifx\smjcoverchoice\smjclassiccover
+    \input{front/f1-cover}
+  \else
+    \input{front/f1-cover-universe}
+  \fi
+\fi
 \input{front/f2-info}
 %   Table of Contents ──────────────────────────────────────
 \input{front/f3-toc}
